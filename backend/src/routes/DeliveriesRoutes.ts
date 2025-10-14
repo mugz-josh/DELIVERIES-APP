@@ -1,18 +1,25 @@
 import { Router } from "express";
 import db from "../db";
+import nodemailer from "nodemailer";
 
 const router = Router();
 
-// ✅ DASHBOARD STATS ROUTE - FIXED
+// -----------------------------
+// DASHBOARD STATS
+// -----------------------------
 router.get("/dashboard/stats", async (req, res) => {
   try {
-    // Get counts for each status
-    const [pendingRows] = await db.query("SELECT COUNT(*) as count FROM deliveries WHERE status = 'pending'");
-    const [inTransitRows] = await db.query("SELECT COUNT(*) as count FROM deliveries WHERE status = 'in_transit'");
-    const [deliveredRows] = await db.query("SELECT COUNT(*) as count FROM deliveries WHERE status = 'delivered'");
+    const [pendingRows] = await db.query(
+      "SELECT COUNT(*) as count FROM deliveries WHERE status = 'pending'"
+    );
+    const [inTransitRows] = await db.query(
+      "SELECT COUNT(*) as count FROM deliveries WHERE status = 'in_transit'"
+    );
+    const [deliveredRows] = await db.query(
+      "SELECT COUNT(*) as count FROM deliveries WHERE status = 'delivered'"
+    );
     const [totalRows] = await db.query("SELECT COUNT(*) as count FROM deliveries");
-    
-    // Calculate success rate (delivered / total)
+
     const total = (totalRows as any)[0].count;
     const delivered = (deliveredRows as any)[0].count;
     const successRate = total > 0 ? Math.round((delivered / total) * 100) : 0;
@@ -23,9 +30,9 @@ router.get("/dashboard/stats", async (req, res) => {
       delivered: (deliveredRows as any)[0].count,
       total: total,
       successRate: successRate,
-      averageDeliveryTime: 2.5 // Fixed: Using default value
+      averageDeliveryTime: 2.5, // default/fixed
     };
-    
+
     res.json(stats);
   } catch (err) {
     console.error("Failed to fetch dashboard stats:", err);
@@ -33,29 +40,105 @@ router.get("/dashboard/stats", async (req, res) => {
   }
 });
 
-// ✅ CREATE NEW DELIVERY ROUTE - ADDED
+// -----------------------------
+// CREATE NEW DELIVERY (with email)
+// -----------------------------
 router.post("/", async (req, res) => {
   try {
-    const { item, customer_name, address, date, status = 'pending' } = req.body;
+    const {
+      senderName,
+      senderPhone,
+      senderAddress,
+      receiverName,
+      receiverPhone,
+      receiverAddress,
+      packageType,
+      packageWeight,
+      packageDescription,
+      pickupDate,
+      deliveryType,
+      status = "pending",
+    } = req.body;
 
     // Validate required fields
-    if (!item || !customer_name || !address || !date) {
-      return res.status(400).json({ error: "All fields are required" });
+    if (
+      !senderName ||
+      !senderPhone ||
+      !senderAddress ||
+      !receiverName ||
+      !receiverPhone ||
+      !receiverAddress ||
+      !pickupDate
+    ) {
+      return res.status(400).json({ error: "All required fields must be filled" });
     }
 
     // Insert new delivery
     const [result] = await db.query(
-      "INSERT INTO deliveries (item, customer_name, address, date, status) VALUES (?, ?, ?, ?, ?)",
-      [item, customer_name, address, date, status]
+      `INSERT INTO deliveries 
+      (senderName, senderPhone, senderAddress, receiverName, receiverPhone, receiverAddress, packageType, packageWeight, packageDescription, pickupDate, deliveryType, status)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        senderName,
+        senderPhone,
+        senderAddress,
+        receiverName,
+        receiverPhone,
+        receiverAddress,
+        packageType,
+        packageWeight,
+        packageDescription,
+        pickupDate,
+        deliveryType,
+        status,
+      ]
     );
 
-    // Get the newly created delivery
-    const [newDeliveryRows] = await db.query("SELECT * FROM deliveries WHERE id = ?", [(result as any).insertId]);
+    const [newDeliveryRows] = await db.query(
+      "SELECT * FROM deliveries WHERE id = ?",
+      [(result as any).insertId]
+    );
     const newDelivery = (newDeliveryRows as any)[0];
 
+    // Send email
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_USER, // receive all orders here
+      subject: `New Delivery Order from ${senderName}`,
+      text: `
+Sender Information:
+  Name: ${senderName}
+  Phone: ${senderPhone}
+  Address: ${senderAddress}
+
+Receiver Information:
+  Name: ${receiverName}
+  Phone: ${receiverPhone}
+  Address: ${receiverAddress}
+
+Package Details:
+  Type: ${packageType}
+  Weight: ${packageWeight}kg
+  Description: ${packageDescription}
+  Pickup Date: ${pickupDate}
+  Delivery Type: ${deliveryType}
+  Status: ${status}
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
+
     res.status(201).json({
-      message: "Delivery created successfully",
-      delivery: newDelivery
+      message: "Delivery created successfully and email sent!",
+      delivery: newDelivery,
     });
   } catch (err) {
     console.error("Failed to create delivery:", err);
@@ -63,48 +146,45 @@ router.post("/", async (req, res) => {
   }
 });
 
-// ✅ ENHANCED GET ALL DELIVERIES WITH SEARCH, FILTER, PAGINATION - FIXED
+// -----------------------------
+// GET ALL DELIVERIES (search/filter/pagination)
+// -----------------------------
 router.get("/", async (req, res) => {
   try {
     const { status, search, page = 1, limit = 5 } = req.query;
-    
+
     let query = "SELECT * FROM deliveries WHERE 1=1";
     const params: any[] = [];
 
-    // Filter by status
-    if (status && status !== 'all') {
+    if (status && status !== "all") {
       query += " AND status = ?";
       params.push(status);
     }
-    
-    // Filter by search term - FIXED: using 'item' instead of 'id'
+
     if (search) {
-      query += " AND (item LIKE ? OR address LIKE ? OR customer_name LIKE ?)";
-      const searchTerm = `%${search}%`;
-      params.push(searchTerm, searchTerm, searchTerm);
+      query += " AND (senderName LIKE ? OR receiverName LIKE ? OR packageDescription LIKE ?)";
+      const term = `%${search}%`;
+      params.push(term, term, term);
     }
 
-    // Add pagination
     const offset = (parseInt(page as string) - 1) * parseInt(limit as string);
     query += " ORDER BY created_at DESC LIMIT ? OFFSET ?";
     params.push(parseInt(limit as string), offset);
 
-    // Get paginated deliveries
     const [rows] = await db.query(query, params);
-    
-    // Get total count for pagination
+
+    // Total count for pagination
     let countQuery = "SELECT COUNT(*) as total FROM deliveries WHERE 1=1";
     const countParams: any[] = [];
 
-    if (status && status !== 'all') {
+    if (status && status !== "all") {
       countQuery += " AND status = ?";
       countParams.push(status);
     }
-    
     if (search) {
-      countQuery += " AND (item LIKE ? OR address LIKE ? OR customer_name LIKE ?)"; // FIXED
-      const searchTerm = `%${search}%`;
-      countParams.push(searchTerm, searchTerm, searchTerm);
+      countQuery += " AND (senderName LIKE ? OR receiverName LIKE ? OR packageDescription LIKE ?)";
+      const term = `%${search}%`;
+      countParams.push(term, term, term);
     }
 
     const [countRows] = await db.query(countQuery, countParams);
@@ -115,7 +195,7 @@ router.get("/", async (req, res) => {
       deliveries: rows,
       total: total,
       page: parseInt(page as string),
-      totalPages: totalPages
+      totalPages: totalPages,
     });
   } catch (err) {
     console.error("Failed to fetch deliveries:", err);
@@ -123,33 +203,36 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ✅ ENHANCED STATUS UPDATE ROUTE
+// -----------------------------
+// UPDATE DELIVERY STATUS
+// -----------------------------
 router.put("/:id/status", async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
 
   try {
-    const [result] = await db.query("UPDATE deliveries SET status = ? WHERE id = ?", [status, id]);
+    const [result] = await db.query(
+      "UPDATE deliveries SET status = ? WHERE id = ?",
+      [status, id]
+    );
 
     if ((result as any).affectedRows === 0) {
       return res.status(404).json({ error: "Delivery not found" });
     }
 
-    // Get the updated delivery
     const [updatedRows] = await db.query("SELECT * FROM deliveries WHERE id = ?", [id]);
     const updatedDelivery = (updatedRows as any)[0];
 
-    res.json({ 
-      message: "Status updated successfully", 
-      delivery: updatedDelivery 
-    });
+    res.json({ message: "Status updated successfully", delivery: updatedDelivery });
   } catch (err) {
     console.error("Failed to update delivery status:", err);
     res.status(500).json({ error: "Failed to update delivery status" });
   }
 });
 
-// ✅ KEEP YOUR EXISTING PATCH ROUTE (for backward compatibility)
+// -----------------------------
+// PATCH (legacy status update)
+// -----------------------------
 router.patch("/:id", async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
@@ -168,7 +251,9 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
-// ✅ KEEP YOUR EXISTING DELETE ROUTE
+// -----------------------------
+// DELETE DELIVERY
+// -----------------------------
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
 

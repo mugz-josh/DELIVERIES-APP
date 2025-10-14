@@ -1,10 +1,7 @@
-// src/routes/OtpRoutes.ts
+// backend/src/routes/OtpRoutes.ts
 import { Router } from "express";
-import { registerUser, verifyOtp, loginUser } from "../controllers/OtpControllers";
+import { registerUser, verifyOtp, loginUser, checkEmail, generateOtpForEmail } from "../controllers/OtpControllers";
 import { verifyToken, authorizeRoles } from "../middleware/authMiddleware";
-
-
-
 import { getAllUsers, updateUserRole, deleteUser } from "../controllers/AdminControllers";
 
 const router = Router();
@@ -12,6 +9,12 @@ const router = Router();
 // -------------------------
 // Public routes
 // -------------------------
+
+// Check if email exists
+router.post("/check-email", checkEmail);
+
+// Generate OTP for existing email
+router.post("/generate-otp", generateOtpForEmail);
 
 // Register a new user (OTP sent automatically for non-admins)
 router.post("/register", registerUser);

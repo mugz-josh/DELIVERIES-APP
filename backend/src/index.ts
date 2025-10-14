@@ -8,9 +8,10 @@ import path from "path";
 // ---------------------
 // Import Routes
 // ---------------------
-import OtpRoutes from "./routes/OtpRoutes";          
-import DeliveriesRoutes from "./routes/DeliveriesRoutes"; 
-import UserRoutes from "./routes/UserRoutes"; // ✅ New user routes for profile
+import OtpRoutes from "./routes/OtpRoutes";
+import DeliveriesRoutes from "./routes/DeliveriesRoutes";
+import UserRoutes from "./routes/UserRoutes";
+import BookingRoutes from "./routes/booking"; // ✅ New booking routes
 
 // ---------------------
 // Load environment variables
@@ -57,6 +58,9 @@ app.use("/api/deliveries", DeliveriesRoutes);
 
 // User profile routes (update profile, upload avatar)
 app.use("/api/user", UserRoutes);
+
+// Booking routes (📦 new)
+app.use("/api/bookings", BookingRoutes);
 
 // 404 fallback for undefined routes
 app.use((req, res) => {

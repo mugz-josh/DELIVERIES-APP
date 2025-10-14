@@ -4,7 +4,9 @@ import dotenv from "dotenv";
 
 dotenv.config(); // Load .env variables
 
+// ---------------------
 // Create transporter
+// ---------------------
 export const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST || "smtp.gmail.com",
   port: Number(process.env.EMAIL_PORT) || 587,
@@ -23,6 +25,10 @@ transporter.verify((error, success) => {
     console.log("✅ Email transporter ready");
   }
 });
+
+// ---------------------
+// OTP Functions
+// ---------------------
 
 /**
  * Generate a 6-digit OTP
@@ -49,5 +55,60 @@ export const sendOTPEmail = async (to: string, otp: string) => {
     console.log("✅ Email sent:", info.response);
   } catch (error) {
     console.error("❌ Error sending email:", error);
+  }
+};
+
+// ---------------------
+// Delivery Order Email Function
+// ---------------------
+
+/**
+ * Send delivery order notification email
+ * @param formData All order details from frontend OrderForm
+ */
+export const sendDeliveryEmail = async (formData: {
+  senderName: string;
+  senderPhone: string;
+  senderAddress: string;
+  receiverName: string;
+  receiverPhone: string;
+  receiverAddress: string;
+  packageType: string;
+  packageWeight: string;
+  packageDescription: string;
+  pickupDate: string;
+  deliveryType: string;
+  status?: string;
+}) => {
+  try {
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_USER, // YOU will receive the email
+      subject: `New Delivery Order from ${formData.senderName}`,
+      text: `
+New delivery order received!
+
+Sender Information:
+  Name: ${formData.senderName}
+  Phone: ${formData.senderPhone}
+  Address: ${formData.senderAddress}
+
+Receiver Information:
+  Name: ${formData.receiverName}
+  Phone: ${formData.receiverPhone}
+  Address: ${formData.receiverAddress}
+
+Package Details:
+  Type: ${formData.packageType}
+  Weight: ${formData.packageWeight} kg
+  Description: ${formData.packageDescription}
+  Delivery Type: ${formData.deliveryType}
+  Pickup Date: ${formData.pickupDate}
+  Status: ${formData.status || "pending"}
+`,
+    });
+    console.log("✅ Delivery email sent!");
+  } catch (error) {
+    console.error("❌ Error sending delivery email:", error);
   }
 };

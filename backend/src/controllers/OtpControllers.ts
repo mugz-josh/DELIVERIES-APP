@@ -1,143 +1,164 @@
-import { Request, Response } from "express";
-import bcrypt from "bcryptjs";
-import jwt, { SignOptions } from "jsonwebtoken";
-import db from "../db"; // Your MySQL connection
-import { generateOTP, sendOTPEmail } from "../utils/mailer";
-import dotenv from "dotenv";
+// src/controllers/OtpControllers.ts
+import { Request, Response } from 'express';
 
-dotenv.config();
+// Temporary storage for users and OTPs
+const users: any[] = [];
+const otpStore: any[] = [];
 
-const JWT_SECRET = process.env.JWT_SECRET as string;
-if (!JWT_SECRET) throw new Error("JWT_SECRET not defined in .env");
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || "1h";
-
-// -------------------------
-// REGISTER USER + SEND OTP
-// -------------------------
 export const registerUser = async (req: Request, res: Response) => {
-  const { name, email, password, role = "user" } = req.body;
-
-  if (!name || !email || !password)
-    return res.status(400).json({ message: "All fields are required" });
-
   try {
-    const [rows]: any = await db.query("SELECT * FROM otp_users WHERE email = ?", [email]);
+    const { email, password, name } = req.body;
 
-    if (rows.length > 0)
-      return res.status(400).json({ message: "Email already registered" });
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const [result]: any = await db.query(
-      "INSERT INTO otp_users (name, email, password, role) VALUES (?, ?, ?, ?)",
-      [name, email, hashedPassword, role]
-    );
-
-    // Generate OTP only for non-admins
-    if (role !== "admin") {
-      const otp = generateOTP();
-      const hashedOtp = await bcrypt.hash(otp, 10);
-      const expiresAt = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes
-
-      await db.query(
-        "UPDATE otp_users SET otp_code=?, otp_expires_at=? WHERE id=?",
-        [hashedOtp, expiresAt, result.insertId]
-      );
-
-      await sendOTPEmail(email, otp);
-      console.log(`✅ OTP sent to ${email}: ${otp}`);
+    // Check if user exists
+    const existingUser = users.find(user => user.email === email);
+    if (existingUser) {
+      return res.status(400).json({ 
+        success: false,
+        message: 'User already exists' 
+      });
     }
 
-    return res.status(201).json({
+    // Create user
+    const newUser = {
+      id: users.length + 1,
+      name,
+      email,
+      password,
+      isVerified: false
+    };
+
+    users.push(newUser);
+
+    res.status(201).json({
       success: true,
-      message: "Registered successfully" + (role === "admin" ? "" : ". OTP sent to your email"),
+      message: 'User registered successfully',
+      userId: newUser.id
     });
-  } catch (err) {
-    console.error("❌ Error registering user:", err);
-    return res.status(500).json({ message: "Server error during registration" });
+
+  } catch (error) {
+    res.status(500).json({ 
+      success: false,
+      message: 'Registration error' 
+    });
   }
 };
 
-// -------------------------
-// VERIFY OTP
-// -------------------------
+export const generateOtpForEmail = async (req: Request, res: Response) => {
+  try {
+    const { email } = req.body;
+
+    // Generate 6-digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+    // Store OTP
+    const otpEntry = {
+      email,
+      otp,
+      expiresAt: new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
+    };
+
+    otpStore.push(otpEntry);
+
+    res.status(200).json({
+      success: true,
+      message: 'OTP generated',
+      otp: otp // Remove this in production
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'OTP generation failed'
+    });
+  }
+};
+
 export const verifyOtp = async (req: Request, res: Response) => {
-  const { email, otp } = req.body;
-
-  if (!email || !otp)
-    return res.status(400).json({ message: "Email and OTP are required" });
-
   try {
-    const [rows]: any = await db.query("SELECT * FROM otp_users WHERE email=?", [email]);
-    if (!rows.length) return res.status(404).json({ message: "User not found" });
+    const { email, otp } = req.body;
 
-    const user = rows[0];
-
-    // Admins bypass OTP
-    if (user.role === "admin") {
-      return res.status(400).json({ message: "Admin does not need OTP verification" });
-    }
-
-    if (!user.otp_code) return res.status(400).json({ message: "OTP not generated" });
-    if (new Date(user.otp_expires_at) < new Date()) return res.status(400).json({ message: "OTP expired" });
-
-    const valid = await bcrypt.compare(otp.trim(), user.otp_code);
-
-    if (!valid) return res.status(400).json({ message: "Invalid OTP" });
-
-    // Clear OTP and mark verified
-    await db.query(
-      "UPDATE otp_users SET otp_code=NULL, otp_expires_at=NULL, verified=1 WHERE email=?",
-      [email]
+    // Find OTP
+    const otpEntry = otpStore.find(entry => 
+      entry.email === email && entry.otp === otp
     );
 
-    const payload = { id: user.id, email: user.email, name: user.name, role: user.role || "user" };
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN } as SignOptions);
+    if (!otpEntry) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid OTP'
+      });
+    }
 
-    return res.json({
+    // Check if expired
+    if (new Date() > otpEntry.expiresAt) {
+      return res.status(400).json({
+        success: false,
+        message: 'OTP expired'
+      });
+    }
+
+    // Mark user as verified
+    const user = users.find(user => user.email === email);
+    if (user) user.isVerified = true;
+
+    res.status(200).json({
       success: true,
-      message: "OTP verified successfully",
-      token,
-      user: { id: user.id, name: user.name, email: user.email, role: user.role || "user", avatar: user.avatar || "/default-avatar.png" }
+      message: 'OTP verified'
     });
-  } catch (err) {
-    console.error("❌ Error verifying OTP:", err);
-    return res.status(500).json({ message: "Server error during OTP verification" });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'OTP verification failed'
+    });
   }
 };
 
-// -------------------------
-// LOGIN USER
-// -------------------------
 export const loginUser = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
-
-  if (!email || !password) return res.status(400).json({ message: "Email and password required" });
-
   try {
-    const [rows]: any = await db.query("SELECT * FROM otp_users WHERE email=?", [email]);
-    if (!rows.length) return res.status(404).json({ message: "User not found" });
+    const { email, password } = req.body;
 
-    const user = rows[0];
-
-    // Admins bypass OTP check
-    if (user.role !== "admin" && !user.verified) {
-      return res.status(400).json({ message: "Please verify OTP first" });
+    const user = users.find(user => user.email === email && user.password === password);
+    
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid email or password'
+      });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
-
-    const payload = { id: user.id, email: user.email, name: user.name, role: user.role || "user" };
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN } as SignOptions);
-
-    return res.json({
+    res.status(200).json({
       success: true,
-      message: "Login successful",
-      token,
-      user: { id: user.id, name: user.name, email: user.email, role: user.role || "user", avatar: user.avatar || "/default-avatar.png" }
+      message: 'Login successful',
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email
+      }
     });
-  } catch (err) {
-    console.error("❌ Error logging in:", err);
-    return res.status(500).json({ message: "Server error during login" });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Login failed'
+    });
+  }
+};
+
+export const checkEmail = async (req: Request, res: Response) => {
+  try {
+    const { email } = req.body;
+
+    const exists = users.some(user => user.email === email);
+
+    res.status(200).json({
+      exists: exists
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Email check failed'
+    });
   }
 };
