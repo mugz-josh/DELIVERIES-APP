@@ -11,7 +11,8 @@ import path from "path";
 import OtpRoutes from "./routes/OtpRoutes";
 import DeliveriesRoutes from "./routes/DeliveriesRoutes";
 import UserRoutes from "./routes/UserRoutes";
-import BookingRoutes from "./routes/booking"; // ✅ New booking routes
+import BookingRoutes from "./routes/booking"; // ✅ Booking routes
+import SupportRoutes from "./routes/support"; // ✅ New Support route
 
 // ---------------------
 // Load environment variables
@@ -61,6 +62,9 @@ app.use("/api/user", UserRoutes);
 
 // Booking routes (📦 new)
 app.use("/api/bookings", BookingRoutes);
+
+// Support / Donate routes
+app.use("/api/support", SupportRoutes);
 
 // 404 fallback for undefined routes
 app.use((req, res) => {
