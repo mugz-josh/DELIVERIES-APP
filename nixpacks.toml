@@ -1,0 +1,8 @@
+# nixpacks.toml file
+[phases.build]
+# 1. Install dependencies for the backend
+cmds = ["npm install", "npm run build"]
+
+[start]
+# 2. Start the compiled backend server
+cmd = "npm start"
