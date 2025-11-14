@@ -1,0 +1,104 @@
+/* BECOME DRIVER SECTION */
+.become-driver-section {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Container */
+.become-driver-container {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+/* Title */
+.become-driver-container h1 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  color: #f4b400; /* Warm gold highlight */
+  letter-spacing: 1px;
+}
+
+/* Subtitle */
+.become-driver-container p {
+  font-size: 1.1rem;
+  color: #d1d1e0;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+/* FORM */
+.become-driver-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* Input fields */
+.become-driver-form input {
+  padding: 0.9rem 1rem;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 1rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+  outline: none;
+}
+
+.become-driver-form input::placeholder {
+  color: #c0c0c0;
+}
+
+.become-driver-form input:focus {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.02);
+}
+
+/* BUTTON */
+.apply-btn {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #f4b400, #ffcc33);
+  color: #1a1a2e;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(244, 180, 0, 0.4);
+}
+
+.apply-btn:hover {
+  background: linear-gradient(135deg, #ffcc33, #f4b400);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(244, 180, 0, 0.6);
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 600px) {
+  .become-driver-container {
+    padding: 2rem 1.5rem;
+  }
+
+  .become-driver-container h1 {
+    font-size: 1.8rem;
+  }
+
+  .become-driver-container p {
+    font-size: 1rem;
+  }
+}

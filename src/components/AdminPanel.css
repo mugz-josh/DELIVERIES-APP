@@ -1,0 +1,451 @@
+/* src/components/AdminPanel.css */
+
+.admin-panel {
+  padding: 3rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.admin-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.03"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+  pointer-events: none;
+}
+
+.admin-panel h2 {
+  text-align: center;
+  color: white;
+  font-size: 3rem;
+  margin-bottom: 3rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  position: relative;
+  padding-bottom: 1.5rem;
+  background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.admin-panel h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 4px;
+  background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1);
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.admin-panel table {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+  border-collapse: collapse;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+}
+
+.admin-panel table:hover {
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.3);
+  transform: translateY(-5px);
+}
+
+.admin-panel thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+}
+
+.admin-panel thead::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+}
+
+.admin-panel th {
+  padding: 1.5rem 1.2rem;
+  text-align: left;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  border: none;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.admin-panel th:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.admin-panel th:first-child {
+  border-top-left-radius: 20px;
+}
+
+.admin-panel th:last-child {
+  border-top-right-radius: 20px;
+}
+
+.admin-panel tbody tr {
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border-bottom: 1px solid rgba(236, 240, 241, 0.8);
+  position: relative;
+}
+
+.admin-panel tbody tr:last-child {
+  border-bottom: none;
+}
+
+.admin-panel tbody tr::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(to bottom, #667eea, #764ba2);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.admin-panel tbody tr:hover::before {
+  opacity: 1;
+}
+
+.admin-panel tbody tr:hover {
+  background: rgba(248, 249, 250, 0.8);
+  transform: translateX(10px);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.admin-panel tbody tr.admin-row {
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 235, 59, 0.1) 100%);
+  border-left: 6px solid #ffc107;
+  position: relative;
+}
+
+.admin-panel tbody tr.admin-row::after {
+  content: '⭐ ADMIN';
+  position: absolute;
+  top: 50%;
+  right: -80px;
+  transform: translateY(-50%) rotate(45deg);
+  background: linear-gradient(135deg, #ffc107, #ff8c00);
+  color: white;
+  padding: 0.3rem 2rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
+}
+
+.admin-panel tbody tr.admin-row:hover {
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.2) 0%, rgba(255, 235, 59, 0.2) 100%);
+  transform: translateX(15px) scale(1.02);
+}
+
+.admin-panel td {
+  padding: 1.5rem 1.2rem;
+  color: #2d3748;
+  font-weight: 500;
+  border: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.admin-panel td:first-child {
+  font-weight: 700;
+  color: #667eea;
+  font-size: 1.1rem;
+}
+
+.admin-panel td:last-child {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.admin-panel button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  min-width: 100px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.admin-panel button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.admin-panel button:hover::before {
+  left: 100%;
+}
+
+.admin-panel button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+.admin-panel button:active {
+  transform: translateY(0) scale(1);
+}
+
+/* Promote button */
+.admin-panel button:nth-child(1) {
+  background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
+}
+
+.admin-panel button:nth-child(1):hover {
+  background: linear-gradient(135deg, #00a085 0%, #008c75 100%);
+  box-shadow: 0 8px 25px rgba(0, 184, 148, 0.5);
+}
+
+/* Demote button */
+.admin-panel button:nth-child(2) {
+  background: linear-gradient(135deg, #ff7675 0%, #e84393 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 118, 117, 0.3);
+}
+
+.admin-panel button:nth-child(2):hover {
+  background: linear-gradient(135deg, #e84393 0%, #d63031 100%);
+  box-shadow: 0 8px 25px rgba(255, 118, 117, 0.5);
+}
+
+/* Delete button */
+.admin-panel button:last-child {
+  background: linear-gradient(135deg, #636e72 0%, #2d3436 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(99, 110, 114, 0.3);
+}
+
+.admin-panel button:last-child:hover {
+  background: linear-gradient(135deg, #2d3436 0%, #1e272e 100%);
+  box-shadow: 0 8px 25px rgba(99, 110, 114, 0.5);
+}
+
+/* Loading and error states */
+.admin-panel p {
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 3rem 2rem;
+  color: #636e72;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  margin: 2rem auto;
+  max-width: 600px;
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+  border-left: 6px solid #667eea;
+}
+
+.admin-panel p[style*="color: red"] {
+  background: linear-gradient(135deg, rgba(255, 118, 117, 0.1) 0%, rgba(214, 48, 49, 0.1) 100%);
+  color: #d63031 !important;
+  border-left: 6px solid #ff7675;
+  backdrop-filter: blur(20px);
+}
+
+/* Enhanced responsive design */
+@media (max-width: 1024px) {
+  .admin-panel {
+    padding: 2rem 1.5rem;
+  }
+  
+  .admin-panel h2 {
+    font-size: 2.5rem;
+  }
+  
+  .admin-panel table {
+    border-radius: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-panel {
+    padding: 1.5rem 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  
+  .admin-panel h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .admin-panel table {
+    font-size: 0.9rem;
+    border-radius: 12px;
+  }
+  
+  .admin-panel th,
+  .admin-panel td {
+    padding: 1rem 0.8rem;
+  }
+  
+  .admin-panel td:last-child {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .admin-panel button {
+    padding: 0.7rem 1rem;
+    font-size: 0.8rem;
+    min-width: 80px;
+    width: 100%;
+  }
+  
+  .admin-panel tbody tr.admin-row::after {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-panel {
+    padding: 1rem 0.5rem;
+  }
+  
+  .admin-panel h2 {
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+  }
+  
+  .admin-panel table {
+    display: block;
+    overflow-x: auto;
+    border-radius: 10px;
+  }
+  
+  .admin-panel th {
+    font-size: 0.8rem;
+    padding: 0.8rem 0.5rem;
+  }
+  
+  .admin-panel td {
+    padding: 0.8rem 0.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Premium animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); }
+  50% { box-shadow: 0 25px 50px rgba(102, 126, 234, 0.2); }
+}
+
+.admin-panel table {
+  animation: fadeInUp 0.8s ease-out, glow 3s ease-in-out infinite;
+}
+
+.admin-panel tbody tr {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.admin-panel tbody tr:nth-child(1) { animation-delay: 0.1s; }
+.admin-panel tbody tr:nth-child(2) { animation-delay: 0.2s; }
+.admin-panel tbody tr:nth-child(3) { animation-delay: 0.3s; }
+.admin-panel tbody tr:nth-child(4) { animation-delay: 0.4s; }
+.admin-panel tbody tr:nth-child(5) { animation-delay: 0.5s; }
+
+/* Custom scrollbar */
+.admin-panel table::-webkit-scrollbar {
+  height: 12px;
+}
+
+.admin-panel table::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  margin: 0 20px;
+}
+
+.admin-panel table::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.admin-panel table::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a42a0 100%);
+}
+
+/* Floating particles background */
+.admin-panel::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  animation: float 20s infinite linear;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(50px, 50px) rotate(360deg); }
+}

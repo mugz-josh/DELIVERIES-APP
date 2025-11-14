@@ -1,0 +1,344 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+                
+/* ==============================
+   CONTAINER & LAYOUT
+   ============================== */
+.tracking-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 4rem 2rem;
+    /* Matches your dark gradient background */
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    font-family: 'Poppins', sans-serif;
+    color: #e0e0e0;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.tracking-container {
+    width: 100%;
+    max-width: 800px;
+    /* Dark card background with slight transparency */
+    background: rgba(22,33,62,0.95);
+    border-radius: 15px;
+    padding: 40px;
+    /* Gold/Orange border accent */
+    border: 1px solid rgba(243,156,18,0.4);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+    backdrop-filter: blur(5px);
+}
+
+.tracking-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.tracking-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #f39c12; /* Accent Color */
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.tracking-subtitle {
+    font-size: 1.1rem;
+    color: #b0c4de;
+    margin: 0;
+}
+
+/* ==============================
+   FORM AND INPUT
+   ============================== */
+.tracking-form {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.tracking-input-wrapper {
+    flex-grow: 1;
+    position: relative;
+    min-width: 250px;
+}
+
+.tracking-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #f39c12;
+}
+
+.tracking-input {
+    width: 100%;
+    padding: 15px 15px 15px 50px;
+    border-radius: 10px;
+    border: 2px solid rgba(243,156,18,0.3);
+    background: rgba(0,0,0,0.1);
+    color: #fff;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+}
+
+.tracking-input::placeholder {
+    color: #94a3b8;
+}
+
+.tracking-input:focus {
+    border-color: #f39c12;
+    box-shadow: 0 0 0 3px rgba(243,156,18,0.4);
+}
+
+.tracking-button {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    flex-shrink: 0;
+}
+
+.tracking-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(243,156,18,0.4);
+}
+
+.tracking-button:disabled {
+    background: #555;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* ==============================
+   RESULT DISPLAY
+   ============================== */
+.tracking-result {
+    background: rgba(26, 26, 46, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid rgba(52, 152, 219, 0.3);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed #3e4c6c;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.result-status {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.result-status > svg {
+    color: #3498db; /* Blue for the main truck icon */
+}
+
+.result-status h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.result-eta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: right;
+}
+
+.result-eta > svg {
+    color: #2ecc71; /* Green for clock */
+}
+
+.eta-label {
+    color: #b0c4de;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.eta-time {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Status Color Mapping */
+.status-badge.Package-Received {
+    background: #3498db; 
+    color: white;
+}
+.status-badge.In-Transit, .status-badge.Out-for-Delivery {
+    background: #f39c12;
+    color: #1a1a2e;
+}
+.status-badge.Delivered {
+    background: #1abc9c;
+    color: #1a1a2e;
+}
+
+.result-location {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #b0c4de;
+    margin-bottom: 30px;
+    font-size: 1rem;
+    padding: 5px 10px;
+    background: rgba(0,0,0,0.1);
+    border-left: 4px solid #3498db;
+    border-radius: 4px;
+}
+
+.result-location > svg {
+    color: #3498db;
+}
+
+/* ==============================
+   TRACKING TIMELINE
+   ============================== */
+.tracking-timeline {
+    position: relative;
+    padding-left: 20px;
+}
+
+.tracking-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: #3e4c6c; /* Timeline line color */
+    border-radius: 1px;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 25px;
+    position: relative;
+    padding-left: 30px;
+}
+
+.timeline-icon {
+    position: absolute;
+    left: -15px;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 0 0 4px #1a1a2e;
+    z-index: 10;
+}
+
+.timeline-item.completed .timeline-icon {
+    background: #2ecc71; 
+}
+
+.timeline-item.pending .timeline-icon {
+    background: #e67e22; 
+}
+
+.timeline-content h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.timeline-content p {
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+    color: #b0c4de;
+}
+
+/* Placeholder & Error */
+.tracking-placeholder {
+    text-align: center;
+    padding: 50px 20px;
+    border: 1px dashed #3e4c6c;
+    border-radius: 10px;
+    color: #b0c4de;
+}
+
+.tracking-placeholder > svg {
+    color: #3e4c6c;
+    margin-bottom: 15px;
+}
+
+.tracking-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #c0392b;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+    .tracking-container {
+        padding: 30px 20px;
+    }
+    .tracking-form {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .tracking-button {
+        width: 100%;
+    }
+    .result-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .result-eta {
+        align-self: flex-end;
+        text-align: left;
+    }
+}
+/* Keyframe for loading spinner */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.animate-spin {
+    animation: spin 1.5s linear infinite;
+}

@@ -1,0 +1,120 @@
+/* Container for the entire auth page */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f5f6fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Card holding the form */
+.auth-card {
+  background: #ffffff;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+
+/* Form heading */
+.auth-card h2 {
+  margin-bottom: 25px;
+  font-size: 26px;
+  color: #333333;
+  font-weight: 600;
+}
+
+/* Input fields */
+.auth-card input {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 10px 0 5px;
+  border-radius: 6px;
+  border: 1px solid #cccccc;
+  font-size: 15px;
+  transition: all 0.2s;
+}
+
+.auth-card input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  outline: none;
+}
+
+/* Buttons */
+.auth-card button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 6px;
+  background-color: #007bff;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.auth-card button:hover {
+  background-color: #0056b3;
+}
+
+/* Switch between login/register */
+.switch-button {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: underline;
+  margin-left: 5px;
+}
+
+.switch-button:hover {
+  color: #0056b3;
+}
+
+/* OTP verify button */
+.verify-otp-button {
+  background-color: #28a745;
+  color: #ffffff;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.verify-otp-button:hover {
+  background-color: #218838;
+}
+
+/* Message box */
+.message {
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+/* Error messages */
+.message.error {
+  background-color: #f8d7da;
+  color: #842029;
+}
+
+/* Success messages */
+.message.success {
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+/* Optional: small spacing for paragraph links */
+.auth-card p {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #555555;
+}

@@ -1,0 +1,746 @@
+/* ==============================
+    SERVICES.CSS - FULL UPDATED STYLING
+    ============================== */
+
+/* GLOBAL SETTINGS */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #0f3460;
+    color: #fff; /* Default text color is white, which works for most dark sections */
+}
+
+section {
+    position: relative;
+    padding: 4rem 2rem;
+    border-radius: 20px;
+    min-height: auto;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    overflow: hidden;
+}
+
+section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(243,156,18,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(230,126,34,0.1) 0%, transparent 50%);
+    animation: backgroundPulse 8s ease-in-out infinite;
+    z-index: 0;
+}
+
+@keyframes backgroundPulse {
+    0%,100% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+}
+
+/* ==============================
+    SECTION TITLES
+    ============================== */
+.section-title, 
+.why-safeboda-title,
+.empowering-title,
+.payments-title,
+.safeboda-rides-title,
+.services-title,
+.how-it-works-title,
+.business-title,
+.best-service-title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    color: #f39c12;
+    margin-bottom: 2rem;
+    z-index: 1;
+    position: relative;
+}
+
+/* ==============================
+    WE DELIVER THE BEST SERVICE SECTION
+    ============================== */
+.best-service-section {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.best-service-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(46, 204, 113, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(52, 152, 219, 0.1) 0%, transparent 50%);
+    animation: backgroundPulse 8s ease-in-out infinite;
+}
+
+.best-service-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.best-service-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.best-service-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #2ecc71;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.best-service-description {
+    font-size: 1.2rem;
+    color: #e0e0e0;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+    text-align: center;
+}
+
+/* Divider */
+.divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #2ecc71, transparent);
+    margin: 40px auto;
+    max-width: 200px;
+}
+
+/* Best Service Content */
+.best-service-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: start;
+}
+
+/* Tuma na SafeBoda Section */
+.tuma-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #2ecc71;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.tuma-features-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.tuma-feature-card {
+    background: rgba(22,33,62,0.8);
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid rgba(46, 204, 113, 0.3);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.tuma-feature-card:hover {
+    transform: translateY(-5px);
+    border-color: #2ecc71;
+    box-shadow: 0 10px 25px rgba(46, 204, 113, 0.3);
+}
+
+.tuma-feature-icon {
+    margin-bottom: 15px;
+    color: #2ecc71;
+}
+
+.tuma-feature-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.tuma-feature-description {
+    color: #e0e0e0;
+    line-height: 1.5;
+}
+
+/* Service Benefits Grid */
+.service-benefits-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+}
+
+.service-benefit-card {
+    background: rgba(22,33,62,0.8);
+    padding: 30px 25px;
+    border-radius: 15px;
+    border: 1px solid rgba(52, 152, 219, 0.3);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.service-benefit-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, rgba(52,152,219,0.1) 0%, rgba(46,204,113,0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.service-benefit-card:hover {
+    transform: translateY(-5px);
+    border-color: #3498db;
+    box-shadow: 0 12px 30px rgba(52, 152, 219, 0.3);
+}
+
+.service-benefit-card:hover::before {
+    opacity: 1;
+}
+
+.service-benefit-icon {
+    margin-bottom: 20px;
+    color: #3498db;
+    position: relative;
+    z-index: 1;
+}
+
+.service-benefit-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #fff;
+    position: relative;
+    z-index: 1;
+}
+
+.service-benefit-description {
+    color: #e0e0e0;
+    line-height: 1.5;
+    position: relative;
+    z-index: 1;
+}
+
+/* ==============================
+    SAFEBODA FOR BUSINESS SECTION
+    ============================== */
+.business-section {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.business-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(52, 152, 219, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(155, 89, 182, 0.1) 0%, transparent 50%);
+    animation: backgroundPulse 8s ease-in-out infinite;
+}
+
+.business-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.business-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.business-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #f39c12;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.business-subtitle {
+    font-size: 1.3rem;
+    color: #e0e0e0;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Business Features Grid */
+.business-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.business-feature-card {
+    background: rgba(22,33,62,0.8);
+    padding: 40px 30px;
+    border-radius: 15px;
+    text-align: center;
+    border: 1px solid rgba(52, 152, 219, 0.3);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.business-feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, rgba(52,152,219,0.1) 0%, rgba(155,89,182,0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.business-feature-card:hover {
+    transform: translateY(-8px);
+    border-color: #3498db;
+    box-shadow: 0 15px 30px rgba(52, 152, 219, 0.3);
+}
+
+.business-feature-card:hover::before {
+    opacity: 1;
+}
+
+.business-feature-icon {
+    margin-bottom: 20px;
+    color: #3498db;
+    position: relative;
+    z-index: 1;
+}
+
+.business-feature-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #fff;
+    position: relative;
+    z-index: 1;
+}
+
+.business-feature-description {
+    color: #e0e0e0;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+}
+
+/* Business CTA */
+.business-cta {
+    text-align: center;
+    background: rgba(22,33,62,0.9);
+    padding: 40px;
+    border-radius: 15px;
+    border: 1px solid rgba(243,156,18,0.3);
+    backdrop-filter: blur(10px);
+}
+
+.business-cta-text {
+    font-size: 1.2rem;
+    color: #f39c12;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.business-cta-button {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none; /* Add this to remove default link styling */
+}
+
+.business-cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+    background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+}
+
+/* ==============================
+    IMAGE CARDS
+    ============================== */
+.image-card {
+    background: rgba(22,33,62,0.7);
+    border-radius: 15px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    border: 1px solid rgba(243,156,18,0.3);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
+}
+
+.image-card:hover {
+    transform: translateY(-5px);
+    background: rgba(22,33,62,0.85);
+    border-color: #f39c12;
+    box-shadow: 0 12px 25px rgba(243,156,18,0.4);
+}
+
+.image-card img {
+    width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.image-card h3,
+.image-card h4 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+
+.image-card p {
+    font-size: 1rem;
+    line-height: 1.4;
+    color: #e0e0e0;
+}
+
+/* BADGES */
+.image-card .badge {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg,#f39c12,#e67e22);
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    font-weight: 600;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    box-shadow: 0 5px 15px rgba(243,156,18,0.4);
+}
+
+/* ==============================
+    SERVICES GRID (Delivery Services)
+    ============================== */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    z-index: 1;
+}
+
+.service-card {
+    background: rgba(22,33,62,0.7);
+    padding: 1.5rem;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(243,156,18,0.3);
+    text-align: center;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    background: rgba(22,33,62,0.85);
+    border-color: #f39c12;
+    box-shadow: 0 10px 25px rgba(243,156,18,0.4);
+}
+
+.service-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: linear-gradient(135deg,#f39c12,#e67e22);
+    color: #fff;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 15px rgba(243,156,18,0.4);
+    transition: all 0.3s ease;
+}
+
+.service-card h3,
+.service-card h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.service-card p {
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.service-price {
+    color: #f39c12;
+    font-weight: 600;
+    margin: 0.5rem 0;
+}
+
+.service-btn {
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(135deg,#f39c12,#e67e22);
+    color: #fff;
+    font-weight: 600;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.service-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(243,156,18,0.4);
+}
+
+/* ==============================
+    HOW IT WORKS
+    ============================== */
+.how-it-works-section {
+    /* Assuming this section is also dark, like most of your site */
+    padding: 4rem 2rem;
+}
+
+.steps-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+    gap: 1.5rem;
+}
+
+.step-card {
+    background: rgba(22,33,62,0.7);
+    padding: 1.5rem;
+    border-radius: 15px;
+    text-align: center;
+    border: 1px solid rgba(243,156,18,0.3);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.step-card:hover {
+    transform: translateY(-5px);
+    background: rgba(22,33,62,0.85);
+    box-shadow: 0 10px 25px rgba(243,156,18,0.4);
+}
+
+.step-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #f39c12;
+    margin-bottom: 0.8rem;
+}
+
+.step-icon {
+    width: 45px;
+    height: 45px;
+    margin: 0 auto 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg,#f39c12,#e67e22);
+    color: #fff;
+    border-radius: 10px;
+}
+
+.step-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    color: #fff;
+}
+
+.step-description {
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+/* ==============================
+    MODAL
+    ============================== */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.modal {
+    background: rgba(22,33,62,0.9);
+    padding: 1.5rem;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.modal input {
+    padding: 0.7rem 1rem;
+    border-radius: 10px;
+    border: 1px solid rgba(243,156,18,0.3);
+    background: rgba(0,0,0,0.1);
+    color: #fff;
+    outline: none;
+    width: 100%;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.modal-actions button {
+    flex: 1;
+    padding: 0.6rem;
+    border-radius: 12px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.modal-actions button[type="submit"] {
+    background: linear-gradient(135deg,#f39c12,#e67e22);
+    color: #fff;
+}
+
+.modal-actions button[type="button"] {
+    background: #444;
+    color: #fff;
+}
+
+/* ==============================
+    DRIVER SECTION STYLES (THE FIX)
+    ============================== */
+.driver-section {
+    padding: 80px 20px;
+    /* Use a clear light background for contrast */
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); 
+    color: #343a40; /* Set the base text color to dark for visibility */
+    position: relative;
+    overflow: hidden;
+    z-index: 1; 
+}
+
+.driver-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.driver-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #f39c12; /* Keep your brand color for the main title */
+}
+
+.driver-subtitle {
+    font-size: 1.2rem;
+    color: #6c757d; /* A dark gray for the subtitle */
+    max-width: 800px;
+    margin: 0 auto 50px;
+    line-height: 1.6;
+}
+
+.driver-benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.driver-benefit-card {
+    /* Use white card background on the light section background for a subtle lift */
+    background: #ffffff; 
+    padding: 30px 25px;
+    border-radius: 15px;
+    border: 1px solid #dee2e6;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.driver-benefit-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border-color: #f39c12;
+}
+
+.driver-benefit-icon {
+    margin-bottom: 20px;
+    color: #f39c12; /* Use your accent color for icons */
+}
+
+.driver-benefit-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #1a1a2e; /* **CRITICAL FIX: Dark color for title on light background** */
+}
+
+.driver-benefit-description {
+    line-height: 1.5;
+    color: #495057; /* **CRITICAL FIX: Dark color for description on light background** */
+}
+
+.driver-cta-button {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    color: #fff;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none; /* Make sure it doesn't have an underline */
+}
+
+.driver-cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(243,156,18,0.4);
+    background: linear-gradient(135deg, #e67e22 0%, #f39c12 100%);
+}
