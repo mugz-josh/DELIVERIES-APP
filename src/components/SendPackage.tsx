@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./SendPackage.css";
 
 const SendPackage: React.FC = () => {
@@ -11,28 +11,11 @@ const SendPackage: React.FC = () => {
     weight: "",
   });
 
-  const [pickupLocation, setPickupLocation] = useState<{ lat: number; lng: number } | null>(null);
-  const [autoLocationFailed, setAutoLocationFailed] = useState(false);
-
-  // Attempt to get user's current location automatically
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setPickupLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-        },
-        (error) => {
-          console.warn("Geolocation failed:", error.message);
-          setAutoLocationFailed(true); // Allow manual input if automatic fails
-        }
-      );
-    } else {
-      setAutoLocationFailed(true); // Browser does not support geolocation
-    }
-  }, []);
+  // Default manual location (Kampala)
+  const defaultLocation = {
+    lat: 0.3476,
+    lng: 32.5825,
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -41,22 +24,25 @@ const SendPackage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // If no automatic location, let user input anything manually
+    // Always include a default location
     const packageData = {
       ...formData,
-      pickupLat: pickupLocation?.lat || 0, // fallback to 0 if not available
-      pickupLng: pickupLocation?.lng || 0,
+      pickupLat: defaultLocation.lat,
+      pickupLng: defaultLocation.lng,
     };
 
     try {
-      const response = await fetch("https://backend-deliveries.onrender.com/api/send-package", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(packageData),
-      });
+      const response = await fetch(
+        "https://backend-deliveries.onrender.com/api/send-package",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(packageData),
+        }
+      );
 
       if (response.ok) {
-        alert("Package sent successfully! Check your email for confirmation.");
+        alert("Package sent successfully!");
         setFormData({
           sender: "",
           receiver: "",
@@ -77,11 +63,6 @@ const SendPackage: React.FC = () => {
   return (
     <div className="send-package-form">
       <h2>Send a Package</h2>
-      {autoLocationFailed && (
-        <p style={{ color: "orange" }}>
-          ⚠️ Automatic location unavailable. You can enter any pickup address manually.
-        </p>
-      )}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
