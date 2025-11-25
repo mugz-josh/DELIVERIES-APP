@@ -1,5 +1,5 @@
 // src/components/AdminPanel.tsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "./AdminPanel.css";
 
 interface User {
@@ -9,23 +9,16 @@ interface User {
   role: "user" | "admin";
 }
 
-const API_BASE = "http://127.0.0.1:5000/api/otp";
+const API_BASE = "https://backend-deliveries.onrender.com/api/otp";
 
 const AdminPanel: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  // Get JWT token from localStorage
   const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    loadUsers();
-    // eslint-disable-next-line
-  }, []);
-
   // Fetch users from backend
-  const loadUsers = async () => {
+  const loadUsers = useCallback(async () => {
     if (!token) {
       setError("You must be logged in as admin to view users");
       setLoading(false);
@@ -59,7 +52,11 @@ const AdminPanel: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
+
+  useEffect(() => {
+    loadUsers();
+  }, [loadUsers]);
 
   // Promote or demote user
   const updateRole = async (id: number, role: "user" | "admin") => {

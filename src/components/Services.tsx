@@ -106,7 +106,8 @@ const Services: React.FC = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/bookings", {
+      // ✅ FIXED: Use your deployed backend URL
+      const response = await fetch("https://backend-deliveries.onrender.com/api/bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ service: selectedService, ...formData }),

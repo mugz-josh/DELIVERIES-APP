@@ -40,7 +40,8 @@ const SendPackage: React.FC = () => {
     const packageData = { ...formData, pickupLat: pickupLocation.lat, pickupLng: pickupLocation.lng };
 
     try {
-      const response = await fetch("/api/send-package", {
+      // ✅ FIXED: Use your deployed backend URL
+      const response = await fetch("https://backend-deliveries.onrender.com/api/send-package", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(packageData),

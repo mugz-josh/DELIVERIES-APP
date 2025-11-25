@@ -12,7 +12,8 @@ interface UserData {
   role?: "user" | "admin";
 }
 
-const API_BASE = "http://127.0.0.1:5000/api/otp";
+// ✅ FIXED: Use your deployed backend URL
+const API_BASE = "https://backend-deliveries.onrender.com/api/otp";
 
 const Auth: React.FC = () => {
   const { login } = useAuth();

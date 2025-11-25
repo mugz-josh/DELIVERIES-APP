@@ -20,7 +20,8 @@ const Support: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/api/support", { // full backend URL
+      // ✅ FIXED: Use your deployed backend URL
+      const response = await fetch("https://backend-deliveries.onrender.com/api/support", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

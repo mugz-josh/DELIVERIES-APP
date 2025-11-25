@@ -1,8 +1,7 @@
-// src/services/api.ts
 import { LoginCredentials, AuthResponse, User } from '../context/types';
 
-// Use CRA environment variable (must be in .env as REACT_APP_API_URL)
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+// ✅ FIXED: Add fallback in case environment variable is missing
+const API_BASE_URL = process.env.REACT_APP_API_URL || "https://backend-deliveries.onrender.com";
 
 // -------------------------
 // Auth API
@@ -15,12 +14,8 @@ export const authAPI = {
       body: JSON.stringify(credentials),
     });
 
-    if (!response.ok) {
-      throw new Error('Invalid email or password');
-    }
-
-    const data: AuthResponse = await response.json();
-    return data;
+    if (!response.ok) throw new Error('Invalid email or password');
+    return response.json();
   },
 
   logout: async (): Promise<void> => {
@@ -32,17 +27,13 @@ export const authAPI = {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    if (!response.ok) {
-      throw new Error('Failed to fetch profile');
-    }
-
-    const data: User = await response.json();
-    return data;
+    if (!response.ok) throw new Error('Failed to fetch profile');
+    return response.json();
   },
 };
 
 // -------------------------
-// Deliveries API — direct exports
+// Deliveries API
 // -------------------------
 export const fetchDeliveries = async (): Promise<any[]> => {
   const response = await fetch(`${API_BASE_URL}/deliveries`);
@@ -53,7 +44,7 @@ export const fetchDeliveries = async (): Promise<any[]> => {
 export const updateDeliveryStatus = async (id: string | number, status: string): Promise<void> => {
   const response = await fetch(`${API_BASE_URL}/deliveries/${id}`, {
     method: 'PATCH',
-   headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ status }),
   });
   if (!response.ok) throw new Error('Failed to update delivery status');
