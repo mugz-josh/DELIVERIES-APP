@@ -12,16 +12,25 @@ const SendPackage: React.FC = () => {
   });
 
   const [pickupLocation, setPickupLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [autoLocationFailed, setAutoLocationFailed] = useState(false);
 
-  // Get user's current location automatically
+  // Attempt to get user's current location automatically
   useEffect(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setPickupLocation({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-      });
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setPickupLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.warn("Geolocation failed:", error.message);
+          setAutoLocationFailed(true); // Allow manual input if automatic fails
+        }
+      );
+    } else {
+      setAutoLocationFailed(true); // Browser does not support geolocation
     }
   }, []);
 
@@ -32,15 +41,14 @@ const SendPackage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!pickupLocation) {
-      alert("Pickup location not available!");
-      return;
-    }
-
-    const packageData = { ...formData, pickupLat: pickupLocation.lat, pickupLng: pickupLocation.lng };
+    // If no automatic location, let user input anything manually
+    const packageData = {
+      ...formData,
+      pickupLat: pickupLocation?.lat || 0, // fallback to 0 if not available
+      pickupLng: pickupLocation?.lng || 0,
+    };
 
     try {
-      // ✅ FIXED: Use your deployed backend URL
       const response = await fetch("https://backend-deliveries.onrender.com/api/send-package", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -69,13 +77,60 @@ const SendPackage: React.FC = () => {
   return (
     <div className="send-package-form">
       <h2>Send a Package</h2>
+      {autoLocationFailed && (
+        <p style={{ color: "orange" }}>
+          ⚠️ Automatic location unavailable. You can enter any pickup address manually.
+        </p>
+      )}
       <form onSubmit={handleSubmit}>
-        <input type="text" name="sender" placeholder="Sender Name" value={formData.sender} onChange={handleChange} required />
-        <input type="text" name="receiver" placeholder="Receiver Name" value={formData.receiver} onChange={handleChange} required />
-        <input type="email" name="email" placeholder="Your Email" value={formData.email} onChange={handleChange} required />
-        <input type="text" name="pickupAddress" placeholder="Pickup Address" value={formData.pickupAddress} onChange={handleChange} required />
-        <input type="text" name="deliveryAddress" placeholder="Delivery Address" value={formData.deliveryAddress} onChange={handleChange} required />
-        <input type="number" name="weight" placeholder="Package Weight (kg)" value={formData.weight} onChange={handleChange} required />
+        <input
+          type="text"
+          name="sender"
+          placeholder="Sender Name"
+          value={formData.sender}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="receiver"
+          placeholder="Receiver Name"
+          value={formData.receiver}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Your Email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="pickupAddress"
+          placeholder="Pickup Address"
+          value={formData.pickupAddress}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="deliveryAddress"
+          placeholder="Delivery Address"
+          value={formData.deliveryAddress}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="number"
+          name="weight"
+          placeholder="Package Weight (kg)"
+          value={formData.weight}
+          onChange={handleChange}
+          required
+        />
         <button type="submit">Send Package</button>
       </form>
     </div>
