@@ -1,6 +1,6 @@
 // src/components/Hero.tsx
 import React from "react";
-import { Package, Truck, Clock, MapPin, Zap } from "lucide-react";
+import { Package, Truck, Clock, MapPin, Zap, Volume2 } from "lucide-react";
 import "./Hero.css";
 
 const Hero: React.FC = () => {

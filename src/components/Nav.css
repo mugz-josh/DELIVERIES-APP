@@ -4,8 +4,8 @@
 
 /* ===== Top Info Bar ===== */
 .nav-top-bar {
-  background: #0d1117;
-  border-bottom: 1px solid rgba(243, 156, 18, 0.2);
+  background: rgba(22, 33, 62, 0.8);
+  border-bottom: 1px solid rgba(243, 156, 18, 0.3);
 }
 
 .nav-top-content {
@@ -56,12 +56,11 @@
 /* ===== Main Nav ===== */
 .nav-container {
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   position: sticky;
   top: 0;
   z-index: 1000;
-  border-bottom: 3px solid #f39c12;
-  backdrop-filter: blur(10px);
+  border-bottom: 2px solid rgba(243, 156, 18, 0.3);
 }
 
 .nav-content {
@@ -91,12 +90,12 @@
 .logo-badge {
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+  background: #007bff;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
   transition: all 0.3s ease;
   position: relative;
 }
@@ -105,7 +104,7 @@
   content: '';
   position: absolute;
   inset: -2px;
-  background: linear-gradient(135deg, #f39c12, #e67e22, #d35400);
+  background: linear-gradient(135deg, #007bff, #0056b3);
   border-radius: 13px;
   z-index: -1;
   opacity: 0;
@@ -114,19 +113,12 @@
 
 .nav-logo:hover .logo-badge::before {
   opacity: 1;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
 }
 
 .logo-icon {
   width: 28px;
   height: 28px;
   color: #ffffff;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .logo-text-wrapper {
@@ -138,13 +130,8 @@
 .logo-text {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #ffffff;
+  color: #fff;
   letter-spacing: 0.5px;
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(135deg, #ffffff 0%, #f39c12 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .logo-tagline {
@@ -169,7 +156,7 @@
 .nav-item { position: relative; }
 
 .nav-link {
-  color: #e0e0e0;
+  color: #fff;
   text-decoration: none;
   font-weight: 600;
   font-size: 0.95rem;
@@ -226,9 +213,9 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
-  background: rgba(15, 52, 96, 0.3);
-  color: #ffffff;
-  border: 2px solid rgba(243, 156, 18, 0.3);
+  background: rgba(22, 33, 62, 0.8);
+  color: #f39c12;
+  border: 1px solid rgba(243, 156, 18, 0.3);
   border-radius: 8px;
   font-weight: 600;
   font-size: 0.9rem;
@@ -239,7 +226,7 @@
 }
 
 .btn-secondary:hover {
-  border-color: #f39c12;
+  background: rgba(22, 33, 62, 1);
   transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(243, 156, 18, 0.3);
 }
@@ -249,7 +236,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.75rem;
-  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+  background: #007bff;
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -257,13 +244,13 @@
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+  background: #0056b3;
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(243, 156, 18, 0.5);
+  box-shadow: 0 8px 25px rgba(0, 123, 255, 0.5);
 }
 
 /* ===== Profile Section ===== */
@@ -351,32 +338,32 @@
   top: 50%;
   left: 12px;
   transform: translateY(-50%);
-  color: #f39c12;
+  color: #007bff;
 }
 
 .nav-search-input {
   width: 100%;
   padding: 10px 12px 10px 38px;
-  border: 2px solid rgba(243, 156, 18, 0.3);
+  border: 1px solid #ddd;
   border-radius: 8px 0 0 8px;
   outline: none;
   font-size: 0.9rem;
-  background: rgba(22, 33, 62, 0.8);
-  color: #ffffff;
+  background: #ffffff;
+  color: #333;
   transition: all 0.3s ease;
 }
 
 .nav-search-input::placeholder {
-  color: #b0b0b0;
+  color: #999;
 }
 
 .nav-search-input:focus {
-  border-color: #f39c12;
-  box-shadow: 0 0 10px rgba(243, 156, 18, 0.3);
+  border-color: #007bff;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
 }
 
 .nav-search-button {
-  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+  background: linear-gradient(135deg, #f39c12, #e67e22);
   color: #ffffff;
   border: none;
   padding: 10px 18px;
@@ -388,7 +375,7 @@
 }
 
 .nav-search-button:hover {
-  background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+  background: linear-gradient(135deg, #e67e22, #f39c12);
   transform: translateY(-2px);
 }
 
