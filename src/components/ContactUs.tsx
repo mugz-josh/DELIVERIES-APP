@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Package, MapPin, User, Phone, Calendar, DollarSign } from "lucide-react";
+import { Package, MapPin, User, DollarSign } from "lucide-react";
 import "./ContactUs.css";
-import { useAuth } from "../context/authContext";
 
 const OrderForm = () => {
   const [formData, setFormData] = useState({

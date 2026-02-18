@@ -17,16 +17,16 @@ const Footer = () => {
             We deliver your packages with care and precision.
           </p>
           <div className="footer-social">
-            <a href="#" className="social-link" aria-label="Facebook">
+            <a href="https://facebook.com" className="social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
               <Facebook size={20} />
             </a>
-            <a href="#" className="social-link" aria-label="Twitter">
+            <a href="https://twitter.com" className="social-link" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
               <Twitter size={20} />
             </a>
-            <a href="#" className="social-link" aria-label="Instagram">
+            <a href="https://instagram.com" className="social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
               <Instagram size={20} />
             </a>
-            <a href="#" className="social-link" aria-label="LinkedIn">
+            <a href="https://linkedin.com" className="social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
               <Linkedin size={20} />
             </a>
           </div>

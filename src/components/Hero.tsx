@@ -1,6 +1,6 @@
 // src/components/Hero.tsx
 import React from "react";
-import { Package, Truck, Clock, MapPin, Zap, Volume2 } from "lucide-react";
+import { Package, Truck, Clock, MapPin, Zap } from "lucide-react";
 import "./Hero.css";
 
 const Hero: React.FC = () => {
@@ -29,7 +29,7 @@ const Hero: React.FC = () => {
             >
               <Zap size={20} /> <span>Chat on WhatsApp</span>
             </a>
-            <a href="#" className="hero-btn-secondary">
+            <a href="/track-order" className="hero-btn-secondary">
               <MapPin size={20} /> <span>Track Delivery</span>
             </a>
           </div>

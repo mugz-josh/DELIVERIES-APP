@@ -1,6 +1,6 @@
 // src/components/Nav.tsx
 import { ShoppingBag, Phone, MapPin, Menu, X, Clock, Award, Search } from 'lucide-react';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import ProfileModal from './ProfileModal';
 import Support from './Support'; // Support form
@@ -12,7 +12,7 @@ const Nav: React.FC = () => {
   const { logout } = useAuth();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [profileImage] = useState<string | null>(null);
   const [showProfileModal, setShowProfileModal] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -20,8 +20,6 @@ const Nav: React.FC = () => {
   // ✅ Modal states
   const [showSupportForm, setShowSupportForm] = useState(false);
   const [showSendPackageForm, setShowSendPackageForm] = useState(false);
-
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSearchSubmit = (event: React.FormEvent) => {
     event.preventDefault();
