@@ -2,11 +2,5 @@
   "buildCommand": "CI=true npm run build",
   "outputDirectory": "build",
   "framework": "create-react-app",
-  "installCommand": "npm install --legacy-peer-deps && npm rebuild",
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
-    }
-  ]
+  "installCommand": "npm install --legacy-peer-deps && npm rebuild"
 }
