@@ -1,6 +1,6 @@
 // src/components/Services.tsx
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Package,
   Truck,
@@ -27,7 +27,6 @@ import {
 import "./Services.css";
 
 const Services: React.FC = () => {
-  const navigate = useNavigate();
 
   const handleBookNow = (service: string) => {
     setSelectedService(service);

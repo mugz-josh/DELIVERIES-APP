@@ -9,7 +9,7 @@ import './Nav.css';
 import { useAuth } from '../context/authContext';
 
 const Nav: React.FC = () => {
-  const { logout } = useAuth();
+  useAuth();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileImage] = useState<string | null>(null);
