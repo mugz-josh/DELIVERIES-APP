@@ -9,7 +9,7 @@ interface User {
   role: "user" | "admin";
 }
 
-const API_BASE = "https://backend-deliveries.onrender.com/api/otp";
+const API_BASE = "https://deliverieseasy.onrender.com/api/otp";
 
 const AdminPanel: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);

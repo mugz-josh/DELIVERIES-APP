@@ -2,7 +2,7 @@ import { LoginCredentials, AuthResponse, User } from '../context/types';
 
 // ✅ FIXED: Add fallback in case environment variable is missing
 // Use REACT_APP_API_URL env variable, fallback to Render backend
-const API_BASE_URL = process.env.REACT_APP_API_URL || "https://backend-deliveries.onrender.com";
+const API_BASE_URL = process.env.REACT_APP_API_URL || "https://deliverieseasy.onrender.com";
 
 // -------------------------
 // Auth API

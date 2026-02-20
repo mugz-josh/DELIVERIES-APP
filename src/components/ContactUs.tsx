@@ -38,7 +38,7 @@ const OrderForm = () => {
 
     try {
       // ✅ FIXED: Use your deployed backend URL
-      const response = await fetch("https://backend-deliveries.onrender.com/api/deliveries", {
+      const response = await fetch("https://deliverieseasy.onrender.com/api/deliveries", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

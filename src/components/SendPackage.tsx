@@ -33,7 +33,7 @@ const SendPackage: React.FC = () => {
 
     try {
       const response = await fetch(
-        "https://backend-deliveries.onrender.com/api/send-package",
+        "https://deliverieseasy.onrender.com/api/send-package",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

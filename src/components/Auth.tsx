@@ -13,7 +13,7 @@ interface UserData {
 }
 
 // ✅ FIXED: Use your deployed backend URL
-const API_BASE = "https://backend-deliveries.onrender.com/api/otp";
+const API_BASE = "https://deliverieseasy.onrender.com/api/otp";
 
 const Auth: React.FC = () => {
   const { login } = useAuth();
