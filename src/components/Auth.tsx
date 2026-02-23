@@ -8,12 +8,11 @@ interface UserData {
   name?: string;
   email: string;
   password?: string;
-  otp?: string;
   role?: "user" | "admin";
 }
 
-// ✅ FIXED: Use your deployed backend URL
-const API_BASE = "https://deliverieseasy.onrender.com/api/otp";
+// Use your deployed backend URL
+const API_BASE = "https://deliverieseasy.onrender.com/api/auth";
 
 const Auth: React.FC = () => {
   const { login } = useAuth();
@@ -22,7 +21,7 @@ const Auth: React.FC = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [userData, setUserData] = useState<UserData>({ email: "", role: "user" });
   const [message, setMessage] = useState<{ text: string; type: "error" | "success" } | null>(null);
-  const [otpSent, setOtpSent] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const showMessage = (text: string, type: "error" | "success" = "error") => {
     setMessage({ text, type });
@@ -32,7 +31,6 @@ const Auth: React.FC = () => {
   const toggleMode = () => {
     setIsLoginMode(!isLoginMode);
     setMessage(null);
-    setOtpSent(false);
     setUserData({ email: "", role: "user" });
   };
 
@@ -41,130 +39,124 @@ const Auth: React.FC = () => {
     setUserData(prev => ({ ...prev, [name]: value }));
   };
 
-  // ---------------- Signup / Generate OTP ----------------
-  const handleSignupOrGenerateOtp = async (e: React.FormEvent) => {
+  // ---------------- Login ----------------
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { name, email, password, role } = userData;
+    const { email, password } = userData;
 
-    if (!email) {
-      showMessage("Please enter your email");
+    console.log("🔐 [AUTH] Login attempt for:", email);
+
+    if (!email || !password) {
+      console.log("❌ [AUTH] Login failed: Missing email or password");
+      showMessage("Please enter email and password");
       return;
     }
 
-    try {
-      const resCheck = await fetch(`${API_BASE}/check-email`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      const dataCheck = await resCheck.json();
-
-      if (resCheck.ok && dataCheck.exists) {
-        // Existing email → generate OTP
-        await fetch(`${API_BASE}/generate-otp`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
-        });
-        setOtpSent(true);
-        showMessage("✅ OTP sent! Enter it below to continue.", "success");
-      } else {
-        // New user → require name + password
-        if (!name || !password) {
-          showMessage("Please fill all fields");
-          return;
-        }
-
-        await fetch(`${API_BASE}/register`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, password, role: "user" }),
-        });
-        setOtpSent(true);
-        showMessage("✅ Registration successful! OTP sent to your email.", "success");
-      }
-    } catch (err) {
-      console.error(err);
-      // fallback login to dashboard
-      login({
-        user: {
-          name: userData.name || "Guest",
-          email: userData.email,
-          role: userData.role || "user",
-        },
-        token: "dummy-token",
-      });
-      navigate("/dashboard");
-    }
-  };
-
-  // ---------------- OTP Verification ----------------
-  const handleVerifyOtp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const { email, otp, name, role } = userData;
-
-    if (!email || !otp) {
-      showMessage("Please enter email and OTP");
-      return;
-    }
+    setIsLoading(true);
 
     try {
-      const res = await fetch(`${API_BASE}/verify`, {
+      console.log("📤 [AUTH] Sending login request to:", `${API_BASE}/login`);
+      const res = await fetch(`${API_BASE}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, otp }),
+        body: JSON.stringify({ email, password }),
       });
       const data = await res.json();
 
-      // ✅ Always login and redirect, no invalid OTP block
-      login({
-        user: {
-          name: data.user?.name || name || "Guest",
-          email: data.user?.email || email,
-          role: data.user?.role || role || "user",
-        },
-        token: data.token || "dummy-token",
-      });
-      navigate("/dashboard");
+      console.log("📥 [AUTH] Login response:", { status: res.status, success: data.success });
+
+      if (res.ok && data.success) {
+        console.log("✅ [AUTH] Login successful for:", email);
+        login({
+          user: {
+            name: data.data?.user?.name || "User",
+            email: data.data?.user?.email || email,
+            role: data.data?.user?.role || "user",
+          },
+          token: data.data?.token || "token",
+        });
+        showMessage("✅ Login successful!", "success");
+        navigate("/home");
+      } else {
+        console.log("❌ [AUTH] Login failed:", data.message || "Invalid credentials");
+        showMessage(data.message || "Invalid credentials");
+      }
     } catch (err) {
-      console.error(err);
-      // fallback redirect on network error
-      login({
-        user: {
-          name: name || "Guest",
-          email,
-          role: role || "user",
-        },
-        token: "dummy-token",
+      console.error("❌ [AUTH] Login error:", err);
+      showMessage("Login failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+      console.log("📝 [AUTH] Login process completed");
+    }
+  };
+
+  // ---------------- Signup ----------------
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const { name, email, password, role } = userData;
+
+    console.log("📝 [AUTH] Signup attempt for:", email);
+
+    if (!name || !email || !password) {
+      console.log("❌ [AUTH] Signup failed: Missing required fields");
+      showMessage("Please fill all fields");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      console.log("📤 [AUTH] Sending signup request to:", `${API_BASE}/register`);
+      const res = await fetch(`${API_BASE}/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password, role: "user" }),
       });
-      navigate("/dashboard");
+      const data = await res.json();
+
+      console.log("📥 [AUTH] Signup response:", { status: res.status, success: data.success });
+
+      if (res.ok && data.success) {
+        console.log("✅ [AUTH] Account created successfully for:", email);
+        login({
+          user: {
+            name: data.data?.user?.name || name,
+            email: data.data?.user?.email || email,
+            role: data.data?.user?.role || "user",
+          },
+          token: data.data?.token || "token",
+        });
+        showMessage("✅ Account created successfully!", "success");
+        navigate("/home");
+      } else {
+        console.log("❌ [AUTH] Signup failed:", data.message || "Registration failed");
+        showMessage(data.message || "Registration failed");
+      }
+    } catch (err) {
+      console.error("❌ [AUTH] Signup error:", err);
+      showMessage("Registration failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+      console.log("📝 [AUTH] Signup process completed");
     }
   };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h2>{isLoginMode ? "Sign In / Quick Login" : "Create Account"}</h2>
+        <h2>{isLoginMode ? "Sign In" : "Create Account"}</h2>
         {message && <p className={`message ${message.type}`}>{message.text}</p>}
 
-        <form onSubmit={handleSignupOrGenerateOtp}>
-          {!isLoginMode && !otpSent && (
-            <>
-              <input
-                type="text"
-                name="name"
-                placeholder="Full Name"
-                value={userData.name || ""}
-                onChange={handleChange}
-              />
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={userData.password || ""}
-                onChange={handleChange}
-              />
-            </>
+        <form onSubmit={isLoginMode ? handleLogin : handleSignup}>
+          {!isLoginMode && (
+            <input
+              type="text"
+              name="name"
+              placeholder="Full Name"
+              value={userData.name || ""}
+              onChange={handleChange}
+              required={!isLoginMode}
+            />
           )}
 
           <input
@@ -173,31 +165,22 @@ const Auth: React.FC = () => {
             placeholder="Email"
             value={userData.email}
             onChange={handleChange}
+            required
           />
 
-          {otpSent && (
-            <input
-              type="text"
-              name="otp"
-              placeholder="Enter OTP"
-              value={userData.otp || ""}
-              onChange={handleChange}
-            />
-          )}
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={userData.password || ""}
+            onChange={handleChange}
+            required
+          />
 
-          <button type="submit">{otpSent ? "Resend OTP / Submit" : "Continue"}</button>
-        </form>
-
-        {otpSent && (
-          <button
-            type="button"
-            onClick={handleVerifyOtp}
-            className="verify-otp-button"
-            style={{ marginTop: "10px", width: "100%", padding: "10px", borderRadius: "6px" }}
-          >
-            Verify OTP
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? "Please wait..." : isLoginMode ? "Sign In" : "Create Account"}
           </button>
-        )}
+        </form>
 
         <p>
           {isLoginMode ? "Don't have an account?" : "Already have an account?"}{" "}

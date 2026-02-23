@@ -24,6 +24,11 @@ const SendPackage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    console.log("📦 [SEND PACKAGE] Form submitted");
+    console.log("📦 [SEND PACKAGE] Sender:", formData.sender);
+    console.log("📦 [SEND PACKAGE] Receiver:", formData.receiver);
+    console.log("📦 [SEND PACKAGE] Email:", formData.email);
+
     // Always include a default location
     const packageData = {
       ...formData,
@@ -32,17 +37,34 @@ const SendPackage: React.FC = () => {
     };
 
     try {
+      // Format data for the bookings API
+      const bookingData = {
+        service: formData.weight ? `Package delivery (${formData.weight}kg)` : "Package delivery",
+        customer_name: formData.sender,
+        email: formData.email,
+        phone: ""
+      };
+
+      console.log("📤 [SEND PACKAGE] Sending booking request to API");
+      console.log("📤 [SEND PACKAGE] Booking data:", bookingData);
+
       const response = await fetch(
-        "https://deliverieseasy.onrender.com/api/send-package",
+        "https://deliverieseasy.onrender.com/api/bookings",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(packageData),
+          body: JSON.stringify(bookingData),
         }
       );
 
+      console.log("📥 [SEND PACKAGE] Response status:", response.status);
+      const responseData = await response.json();
+      console.log("📥 [SEND PACKAGE] Response data:", responseData);
+
       if (response.ok) {
-        alert("Package sent successfully!");
+        console.log("✅ [SEND PACKAGE] Package sent successfully!");
+        console.log("📧 [SEND PACKAGE] Confirmation email should be sent to:", formData.email);
+        alert("Package sent successfully! Check your email for confirmation.");
         setFormData({
           sender: "",
           receiver: "",
@@ -52,10 +74,11 @@ const SendPackage: React.FC = () => {
           weight: "",
         });
       } else {
+        console.log("❌ [SEND PACKAGE] Failed:", responseData.message || "Something went wrong");
         alert("Something went wrong!");
       }
     } catch (err) {
-      console.error(err);
+      console.error("❌ [SEND PACKAGE] Error:", err);
       alert("Error sending package!");
     }
   };

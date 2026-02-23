@@ -1,5 +1,5 @@
 /* ==============================
-    SERVICES.CSS - FULL UPDATED STYLING
+    SERVICES.CSS - ENHANCED CARD STYLING
     ============================== */
 
 /* GLOBAL SETTINGS */
@@ -8,7 +8,7 @@ body, html {
     padding: 0;
     font-family: 'Poppins', sans-serif;
     background: #0f3460;
-    color: #fff; /* Default text color is white, which works for most dark sections */
+    color: #fff;
 }
 
 section {
@@ -106,7 +106,6 @@ section::before {
     text-align: center;
 }
 
-/* Divider */
 .divider {
     height: 2px;
     background: linear-gradient(90deg, transparent, #2ecc71, transparent);
@@ -114,7 +113,6 @@ section::before {
     max-width: 200px;
 }
 
-/* Best Service Content */
 .best-service-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -122,7 +120,6 @@ section::before {
     align-items: start;
 }
 
-/* Tuma na SafeBoda Section */
 .tuma-title {
     font-size: 1.8rem;
     font-weight: 600;
@@ -138,24 +135,44 @@ section::before {
 }
 
 .tuma-feature-card {
-    background: rgba(22,33,62,0.8);
+    background: linear-gradient(135deg, rgba(22,33,62,0.9) 0%, rgba(15,52,96,0.9) 100%);
     padding: 25px;
-    border-radius: 12px;
+    border-radius: 16px;
     border: 1px solid rgba(46, 204, 113, 0.3);
     backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.tuma-feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #2ecc71, #3498db);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
 }
 
 .tuma-feature-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px) scale(1.02);
     border-color: #2ecc71;
-    box-shadow: 0 10px 25px rgba(46, 204, 113, 0.3);
+    box-shadow: 0 20px 40px rgba(46, 204, 113, 0.3);
+}
+
+.tuma-feature-card:hover::before {
+    transform: scaleX(1);
 }
 
 .tuma-feature-icon {
     margin-bottom: 15px;
     color: #2ecc71;
+    font-size: 2rem;
 }
 
 .tuma-feature-title {
@@ -166,11 +183,11 @@ section::before {
 }
 
 .tuma-feature-description {
-    color: #e0e0e0;
+    color: #b0b0b0;
     line-height: 1.5;
 }
 
-/* Service Benefits Grid */
+/* Service Benefits Grid - Enhanced Cards */
 .service-benefits-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -178,41 +195,43 @@ section::before {
 }
 
 .service-benefit-card {
-    background: rgba(22,33,62,0.8);
-    padding: 30px 25px;
-    border-radius: 15px;
+    background: linear-gradient(135deg, rgba(22,33,62,0.95) 0%, rgba(15,52,96,0.95) 100%);
+    padding: 35px 25px;
+    border-radius: 20px;
     border: 1px solid rgba(52, 152, 219, 0.3);
     backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     text-align: center;
     position: relative;
     overflow: hidden;
 }
 
-.service-benefit-card::before {
+.service-benefit-card::after {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(135deg, rgba(52,152,219,0.1) 0%, rgba(46,204,113,0.1) 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    bottom: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(52, 152, 219, 0.2) 0%, transparent 70%);
+    transition: all 0.4s ease;
 }
 
 .service-benefit-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px) scale(1.02);
     border-color: #3498db;
-    box-shadow: 0 12px 30px rgba(52, 152, 219, 0.3);
+    box-shadow: 0 25px 50px rgba(52, 152, 219, 0.3);
 }
 
-.service-benefit-card:hover::before {
-    opacity: 1;
+.service-benefit-card:hover::after {
+    bottom: -30%;
+    right: -30%;
 }
 
 .service-benefit-icon {
     margin-bottom: 20px;
     color: #3498db;
-    position: relative;
-    z-index: 1;
+    font-size: 2.5rem;
 }
 
 .service-benefit-title {
@@ -220,15 +239,11 @@ section::before {
     font-weight: 600;
     margin-bottom: 12px;
     color: #fff;
-    position: relative;
-    z-index: 1;
 }
 
 .service-benefit-description {
-    color: #e0e0e0;
+    color: #b0b0b0;
     line-height: 1.5;
-    position: relative;
-    z-index: 1;
 }
 
 /* ==============================
@@ -239,16 +254,6 @@ section::before {
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     position: relative;
     overflow: hidden;
-}
-
-.business-section::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: 
-        radial-gradient(circle at 10% 20%, rgba(52, 152, 219, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 90% 80%, rgba(155, 89, 182, 0.1) 0%, transparent 50%);
-    animation: backgroundPulse 8s ease-in-out infinite;
 }
 
 .business-container {
@@ -279,7 +284,7 @@ section::before {
     line-height: 1.6;
 }
 
-/* Business Features Grid */
+/* Business Features Grid - Enhanced Cards */
 .business-features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -288,13 +293,13 @@ section::before {
 }
 
 .business-feature-card {
-    background: rgba(22,33,62,0.8);
+    background: linear-gradient(135deg, rgba(22,33,62,0.95) 0%, rgba(15,52,96,0.95) 100%);
     padding: 40px 30px;
-    border-radius: 15px;
+    border-radius: 20px;
     text-align: center;
     border: 1px solid rgba(52, 152, 219, 0.3);
     backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     position: relative;
     overflow: hidden;
 }
@@ -302,27 +307,46 @@ section::before {
 .business-feature-card::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(135deg, rgba(52,152,219,0.1) 0%, rgba(155,89,182,0.1) 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3498db, #9b59b6);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.business-feature-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(155, 89, 182, 0.15) 0%, transparent 70%);
+    transition: all 0.4s ease;
 }
 
 .business-feature-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-12px) scale(1.02);
     border-color: #3498db;
-    box-shadow: 0 15px 30px rgba(52, 152, 219, 0.3);
+    box-shadow: 0 30px 60px rgba(52, 152, 219, 0.35);
 }
 
 .business-feature-card:hover::before {
-    opacity: 1;
+    transform: scaleX(1);
+}
+
+.business-feature-card:hover::after {
+    top: -30%;
+    right: -30%;
 }
 
 .business-feature-icon {
     margin-bottom: 20px;
     color: #3498db;
-    position: relative;
-    z-index: 1;
+    font-size: 2.5rem;
 }
 
 .business-feature-title {
@@ -330,24 +354,19 @@ section::before {
     font-weight: 600;
     margin-bottom: 15px;
     color: #fff;
-    position: relative;
-    z-index: 1;
 }
 
 .business-feature-description {
-    color: #e0e0e0;
+    color: #b0b0b0;
     line-height: 1.6;
-    position: relative;
-    z-index: 1;
 }
 
-/* Business CTA */
 .business-cta {
     text-align: center;
-    background: rgba(22,33,62,0.9);
+    background: linear-gradient(135deg, rgba(22,33,62,0.95) 0%, rgba(15,52,96,0.95) 100%);
     padding: 40px;
-    border-radius: 15px;
-    border: 1px solid rgba(243,156,18,0.3);
+    border-radius: 20px;
+    border: 2px solid rgba(243,156,18,0.4);
     backdrop-filter: blur(10px);
 }
 
@@ -359,11 +378,11 @@ section::before {
 }
 
 .business-cta-button {
-    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
     color: white;
     border: none;
     padding: 16px 32px;
-    border-radius: 8px;
+    border-radius: 30px;
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
@@ -371,294 +390,355 @@ section::before {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    text-decoration: none; /* Add this to remove default link styling */
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
 }
 
 .business-cta-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
-    background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(243, 156, 18, 0.5);
 }
 
 /* ==============================
-    IMAGE CARDS
-    ============================== */
-.image-card {
-    background: rgba(22,33,62,0.7);
-    border-radius: 15px;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 1rem;
-    border: 1px solid rgba(243,156,18,0.3);
-    backdrop-filter: blur(8px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    transition: all 0.3s ease;
-    width: 100%;
-    max-width: 350px;
-    margin: 0 auto;
-}
-
-.image-card:hover {
-    transform: translateY(-5px);
-    background: rgba(22,33,62,0.85);
-    border-color: #f39c12;
-    box-shadow: 0 12px 25px rgba(243,156,18,0.4);
-}
-
-.image-card img {
-    width: 100%;
-    max-height: 180px;
-    object-fit: cover;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-
-.image-card h3,
-.image-card h4 {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #fff;
-    margin: 0;
-}
-
-.image-card p {
-    font-size: 1rem;
-    line-height: 1.4;
-    color: #e0e0e0;
-}
-
-/* BADGES */
-.image-card .badge {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(135deg,#f39c12,#e67e22);
-    padding: 0.5rem 1rem;
-    border-radius: 25px;
-    font-weight: 600;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    box-shadow: 0 5px 15px rgba(243,156,18,0.4);
-}
-
-/* ==============================
-    SERVICES GRID (Delivery Services)
+    DELIVERY SERVICES - ENHANCED CARDS
     ============================== */
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 3rem;
     z-index: 1;
+    padding: 2rem 0;
 }
 
 .service-card {
-    background: rgba(22,33,62,0.7);
-    padding: 1.5rem;
-    border-radius: 15px;
+    background: linear-gradient(135deg, rgba(22,33,62,0.95) 0%, rgba(15,52,96,0.95) 100%);
+    padding: 3rem 2.5rem;
+    border-radius: 24px;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(243,156,18,0.3);
+    border: 2px solid rgba(243,156,18,0.2);
     text-align: center;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #f39c12, #e67e22);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.service-card::after {
+    content: '';
+    position: absolute;
+    bottom: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(243, 156, 18, 0.15) 0%, transparent 70%);
+    transition: all 0.4s ease;
 }
 
 .service-card:hover {
-    transform: translateY(-5px);
-    background: rgba(22,33,62,0.85);
+    transform: translateY(-15px) scale(1.03);
+    background: linear-gradient(135deg, rgba(30,40,80,1) 0%, rgba(20,60,110,1) 100%);
     border-color: #f39c12;
-    box-shadow: 0 10px 25px rgba(243,156,18,0.4);
+    box-shadow: 0 25px 50px rgba(243, 156, 18, 0.35);
+}
+
+.service-card:hover::before {
+    transform: scaleX(1);
+}
+
+.service-card:hover::after {
+    bottom: -30%;
+    right: -30%;
 }
 
 .service-icon {
-    width: 50px;
-    height: 50px;
-    margin: 0 auto 1rem;
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 12px;
-    background: linear-gradient(135deg,#f39c12,#e67e22);
+    border-radius: 20px;
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
     color: #fff;
-    font-size: 1.5rem;
-    box-shadow: 0 4px 15px rgba(243,156,18,0.4);
-    transition: all 0.3s ease;
+    font-size: 1.8rem;
+    box-shadow: 0 8px 25px rgba(243, 156, 18, 0.4);
+    transition: all 0.4s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.service-card:hover .service-icon {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 12px 35px rgba(243, 156, 18, 0.5);
 }
 
 .service-card h3,
 .service-card h4 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 700;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
+    color: #fff;
+    position: relative;
+    z-index: 1;
 }
 
 .service-card p {
-    color: #e0e0e0;
-    font-size: 0.95rem;
-    line-height: 1.4;
+    color: #b0b0b0;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
 }
 
 .service-price {
     color: #f39c12;
-    font-weight: 600;
-    margin: 0.5rem 0;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    position: relative;
+    z-index: 1;
 }
 
 .service-btn {
-    padding: 0.6rem 1.2rem;
-    background: linear-gradient(135deg,#f39c12,#e67e22);
+    padding: 0.8rem 2rem;
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
     color: #fff;
-    font-weight: 600;
-    border-radius: 10px;
+    font-weight: 700;
+    border-radius: 30px;
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
 }
 
 .service-btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(243,156,18,0.4);
+    box-shadow: 0 8px 25px rgba(243, 156, 18, 0.5);
 }
 
 /* ==============================
-    HOW IT WORKS
+    HOW IT WORKS - ENHANCED STE
     ============================== */
 .how-it-works-section {
-    /* Assuming this section is also dark, like most of your site */
     padding: 4rem 2rem;
 }
 
 .steps-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
 }
 
 .step-card {
-    background: rgba(22,33,62,0.7);
-    padding: 1.5rem;
-    border-radius: 15px;
+    background: linear-gradient(135deg, rgba(22,33,62,0.95) 0%, rgba(15,52,96,0.95) 100%);
+    padding: 2rem 1.5rem;
+    border-radius: 24px;
     text-align: center;
-    border: 1px solid rgba(243,156,18,0.3);
+    border: 2px solid rgba(243,156,18,0.2);
     backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+}
+
+.step-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #f39c12, #e67e22);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
 }
 
 .step-card:hover {
-    transform: translateY(-5px);
-    background: rgba(22,33,62,0.85);
-    box-shadow: 0 10px 25px rgba(243,156,18,0.4);
+    transform: translateY(-12px) scale(1.02);
+    border-color: #f39c12;
+    box-shadow: 0 20px 40px rgba(243, 156, 18, 0.3);
+}
+
+.step-card:hover::before {
+    transform: scaleX(1);
 }
 
 .step-number {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #f39c12;
-    margin-bottom: 0.8rem;
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
 }
 
 .step-icon {
-    width: 45px;
-    height: 45px;
-    margin: 0 auto 0.8rem;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg,#f39c12,#e67e22);
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
     color: #fff;
-    border-radius: 10px;
+    border-radius: 16px;
+    font-size: 1.5rem;
+    transition: all 0.4s ease;
+}
+
+.step-card:hover .step-icon {
+    transform: scale(1.1) rotate(10deg);
 }
 
 .step-title {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 700;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.6rem;
     color: #fff;
 }
 
 .step-description {
-    color: #e0e0e0;
+    color: #b0b0b0;
     font-size: 0.95rem;
-    line-height: 1.4;
+    line-height: 1.5;
 }
 
 /* ==============================
-    MODAL
+    MODAL - ENHANCED
     ============================== */
 .modal-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 100;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .modal {
-    background: rgba(22,33,62,0.9);
-    padding: 1.5rem;
-    border-radius: 15px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    padding: 2.5rem;
+    border-radius: 24px;
     width: 90%;
-    max-width: 400px;
+    max-width: 450px;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.2rem;
+    border: 2px solid rgba(243, 156, 18, 0.3);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal h3 {
+    text-align: center;
+    color: #f39c12;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .modal input {
-    padding: 0.7rem 1rem;
-    border-radius: 10px;
-    border: 1px solid rgba(243,156,18,0.3);
-    background: rgba(0,0,0,0.1);
+    padding: 1rem 1.2rem;
+    border-radius: 12px;
+    border: 2px solid rgba(243, 156, 18, 0.3);
+    background: rgba(0, 0, 0, 0.3);
     color: #fff;
     outline: none;
     width: 100%;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.modal input::placeholder {
+    color: #888;
+}
+
+.modal input:focus {
+    border-color: #f39c12;
+    box-shadow: 0 0 20px rgba(243, 156, 18, 0.2);
 }
 
 .modal-actions {
     display: flex;
-    gap: 0.8rem;
+    gap: 1rem;
+    margin-top: 0.5rem;
 }
 
 .modal-actions button {
     flex: 1;
-    padding: 0.6rem;
+    padding: 1rem;
     border-radius: 12px;
     border: none;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
 }
 
 .modal-actions button[type="submit"] {
-    background: linear-gradient(135deg,#f39c12,#e67e22);
+    background: linear-gradient(135deg, #f39c12, #e67e22);
     color: #fff;
+    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+}
+
+.modal-actions button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(243, 156, 18, 0.5);
 }
 
 .modal-actions button[type="button"] {
-    background: #444;
+    background: rgba(255, 255, 255, 0.1);
     color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.modal-actions button[type="button"]:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
 
 /* ==============================
-    DRIVER SECTION STYLES (THE FIX)
+    DRIVER SECTION STYLES
     ============================== */
 .driver-section {
     padding: 80px 20px;
-    /* Use a clear light background for contrast */
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); 
-    color: #343a40; /* Set the base text color to dark for visibility */
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    color: #343a40;
     position: relative;
     overflow: hidden;
-    z-index: 1; 
+    z-index: 1;
 }
 
 .driver-container {
@@ -671,12 +751,12 @@ section::before {
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 20px;
-    color: #f39c12; /* Keep your brand color for the main title */
+    color: #f39c12;
 }
 
 .driver-subtitle {
     font-size: 1.2rem;
-    color: #6c757d; /* A dark gray for the subtitle */
+    color: #6c757d;
     max-width: 800px;
     margin: 0 auto 50px;
     line-height: 1.6;
@@ -684,63 +764,112 @@ section::before {
 
 .driver-benefits-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 30px;
     margin-bottom: 50px;
 }
 
 .driver-benefit-card {
-    /* Use white card background on the light section background for a subtle lift */
-    background: #ffffff; 
-    padding: 30px 25px;
-    border-radius: 15px;
-    border: 1px solid #dee2e6;
-    transition: all 0.3s ease;
+    background: #ffffff;
+    padding: 35px 25px;
+    border-radius: 20px;
+    border: 2px solid transparent;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     text-align: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.driver-benefit-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #f39c12, #e67e22);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
 }
 
 .driver-benefit-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    transform: translateY(-10px) scale(1.02);
     border-color: #f39c12;
+    box-shadow: 0 20px 40px rgba(243, 156, 18, 0.2);
+}
+
+.driver-benefit-card:hover::before {
+    transform: scaleX(1);
 }
 
 .driver-benefit-icon {
     margin-bottom: 20px;
-    color: #f39c12; /* Use your accent color for icons */
+    color: #f39c12;
+    font-size: 2.5rem;
 }
 
 .driver-benefit-title {
     font-size: 1.2rem;
     font-weight: 700;
     margin-bottom: 10px;
-    color: #1a1a2e; /* **CRITICAL FIX: Dark color for title on light background** */
+    color: #1a1a2e;
 }
 
 .driver-benefit-description {
     line-height: 1.5;
-    color: #495057; /* **CRITICAL FIX: Dark color for description on light background** */
+    color: #495057;
 }
 
 .driver-cta-button {
     background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
     color: #fff;
     border: none;
-    padding: 16px 32px;
-    border-radius: 8px;
+    padding: 18px 36px;
+    border-radius: 30px;
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    text-decoration: none; /* Make sure it doesn't have an underline */
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
 }
 
 .driver-cta-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(243,156,18,0.4);
-    background: linear-gradient(135deg, #e67e22 0%, #f39c12 100%);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 30px rgba(243, 156, 18, 0.5);
+}
+
+/* ==============================
+    RESPONSIVE
+    ============================== */
+@media (max-width: 768px) {
+    section {
+        padding: 3rem 1rem;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .service-card {
+        padding: 1.5rem;
+    }
+    
+    .business-features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .best-service-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .driver-benefits-grid {
+        grid-template-columns: 1fr;
+    }
 }

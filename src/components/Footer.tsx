@@ -1,4 +1,5 @@
 import { ShoppingBag, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
 import './Footer.css';
 
 const Footer = () => {
@@ -7,7 +8,8 @@ const Footer = () => {
   return (
     <footer className="footer-container">
       <div className="footer-content">
-        <div className="footer-section">
+        {/* Brand Section */}
+        <div className="footer-section footer-brand">
           <div className="footer-logo">
             <ShoppingBag className="footer-logo-icon" />
             <span className="footer-logo-text">QuickDeliver</span>
@@ -32,17 +34,19 @@ const Footer = () => {
           </div>
         </div>
 
+        {/* Quick Links */}
         <div className="footer-section">
           <h3 className="footer-title">Quick Links</h3>
           <ul className="footer-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#tracking">Track Order</a></li>
-            <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#about">About Us</a></li>
+            <li><NavLink to="/home">Home</NavLink></li>
+            <li><NavLink to="/services">Services</NavLink></li>
+            <li><NavLink to="/track-order">Track Order</NavLink></li>
+            <li><NavLink to="/products">Products</NavLink></li>
+            <li><NavLink to="/about-us">About Us</NavLink></li>
           </ul>
         </div>
 
+        {/* Services */}
         <div className="footer-section">
           <h3 className="footer-title">Services</h3>
           <ul className="footer-links">
@@ -54,6 +58,7 @@ const Footer = () => {
           </ul>
         </div>
 
+        {/* Contact Us */}
         <div className="footer-section">
           <h3 className="footer-title">Contact Us</h3>
           <ul className="footer-contact">
@@ -62,17 +67,22 @@ const Footer = () => {
               <span>123 Delivery Street, City, Country</span>
             </li>
             <li>
-              <Phone size={18} />
-              <span>+1 (555) 123-4567</span>
+              <a href="tel:+15551234567">
+                <Phone size={18} />
+                <span>+1 (555) 123-4567</span>
+              </a>
             </li>
             <li>
-              <Mail size={18} />
-              <span>support@quickdeliver.com</span>
+              <a href="mailto:support@quickdeliver.com">
+                <Mail size={18} />
+                <span>support@quickdeliver.com</span>
+              </a>
             </li>
           </ul>
         </div>
       </div>
 
+      {/* Bottom Bar */}
       <div className="footer-bottom">
         <div className="footer-bottom-content">
           <p>&copy; {currentYear} QuickDeliver. All rights reserved.</p>
