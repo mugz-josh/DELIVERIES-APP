@@ -60,18 +60,10 @@
 }
 
 @keyframes float {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-  }
-  25% {
-    transform: translate(50px, 30px) scale(1.1);
-  }
-  50% {
-    transform: translate(20px, -30px) scale(0.95);
-  }
-  75% {
-    transform: translate(-30px, 20px) scale(1.05);
-  }
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(50px, 30px) scale(1.1); }
+  50% { transform: translate(20px, -30px) scale(0.95); }
+  75% { transform: translate(-30px, 20px) scale(1.05); }
 }
 
 /* Container */
@@ -451,6 +443,181 @@
   transform: scale(1.05);
 }
 
+/* ====================== SOCIAL LOGIN SECTION ====================== */
+.social-login-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 25px;
+}
+
+.social-btn {
+  width: 100%;
+  padding: 14px 20px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.98);
+  position: relative;
+  overflow: hidden;
+}
+
+.social-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: left 0.5s ease;
+}
+
+.social-btn:hover::before {
+  left: 100%;
+}
+
+/* Google Button */
+.google-btn {
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.google-btn:hover {
+  border-color: #4285f4;
+  background: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(66, 133, 244, 0.25);
+}
+
+/* Apple Button */
+.apple-btn {
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.apple-btn:hover {
+  border-color: #000000;
+  background: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Social Icons */
+.social-icon {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Google G Icon */
+.social-icon.google-icon {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%234285F4' d='M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z'/%3E%3Cpath fill='%2334A853' d='M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z'/%3E%3Cpath fill='%23FBBC05' d='M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z'/%3E%3Cpath fill='%23EA4335' d='M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z'/%3E%3C/svg%3E") no-repeat center;
+  background-size: contain;
+}
+
+/* Apple Icon */
+.social-icon.apple-icon {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000000'%3E%3Cpath d='M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z'/%3E%3C/svg%3E") no-repeat center;
+  background-size: contain;
+}
+
+/* Auth Divider */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  position: relative;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.auth-divider span {
+  padding: 0 15px;
+  color: #888;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Password Requirements */
+.password-requirements {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.requirement {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #888;
+  transition: all 0.3s ease;
+}
+
+.requirement.met {
+  color: #2ecc71;
+}
+
+.requirement-check {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.requirement.met .requirement-check {
+  color: #2ecc71;
+}
+
+/* Terms Section */
+.terms-section {
+  margin: 15px 0;
+}
+
+.terms-checkbox {
+  align-items: flex-start;
+  padding-left: 32px;
+  line-height: 1.4;
+}
+
+.terms-checkbox .checkmark {
+  top: 2px;
+}
+
+.terms-text {
+  font-size: 13px;
+  color: #b0b0b0;
+}
+
+.terms-text a {
+  color: #f39c12;
+  text-decoration: none;
+}
+
+.terms-text a:hover {
+  color: #e67e22;
+  text-decoration: underline;
+}
+
 /* Responsive */
 @media (max-width: 480px) {
   .auth-card {
@@ -475,5 +642,24 @@
   .submit-btn {
     padding: 14px;
     font-size: 15px;
+  }
+  
+  .social-btn {
+    padding: 12px 15px;
+    font-size: 14px;
+    gap: 10px;
+  }
+  
+  .social-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .password-requirements {
+    padding: 10px;
+  }
+  
+  .requirement {
+    font-size: 11px;
   }
 }

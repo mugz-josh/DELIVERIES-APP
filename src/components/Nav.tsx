@@ -99,13 +99,10 @@ const Nav: React.FC = () => {
                 <NavLink to="/services" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Services</NavLink>
               </li>
               <li className="nav-item">
-                <NavLink to="/track-order" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Track Order</NavLink>
+                <NavLink to="/about-us" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>About</NavLink>
               </li>
               <li className="nav-item">
-                <NavLink to="/about-us" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>About Us</NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink to="/contact-us" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Contact Us</NavLink>
+                <NavLink to="/contact-us" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Contact</NavLink>
               </li>
             </ul>
           )}
@@ -188,9 +185,8 @@ const Nav: React.FC = () => {
                 <>
                   <li><NavLink to="/home" onClick={() => setMobileMenuOpen(false)} className="mobile-menu-link">Home</NavLink></li>
                   <li><NavLink to="/services" onClick={() => setMobileMenuOpen(false)} className="mobile-menu-link">Services</NavLink></li>
-                  <li><NavLink to="/track-order" onClick={() => setMobileMenuOpen(false)} className="mobile-menu-link">Track Order</NavLink></li>
-                  <li><NavLink to="/about-us" onClick={() => setMobileMenuOpen(false)} className="mobile-menu-link">About Us</NavLink></li>
-                  <li><NavLink to="/contact-us" onClick={() => setMobileMenuOpen(false)} className="mobile-menu-link">Contact Us</NavLink></li>
+                  <li><NavLink to="/about-us" onClick={() => setMobileMenuOpen(false)} className="mobile-menu-link">About</NavLink></li>
+                  <li><NavLink to="/contact-us" onClick={() => setMobileMenuOpen(false)} className="mobile-menu-link">Contact</NavLink></li>
                   <li><button onClick={handleLogout} className="mobile-menu-link">Logout</button></li>
                 </>
               )}

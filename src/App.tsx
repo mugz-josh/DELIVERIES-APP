@@ -1,12 +1,11 @@
 // src/App.tsx
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 // Import Components
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import Services from "./components/Services";
-import Tracking from "./components/Tracking";
 import AboutUs from "./components/AboutUs";
 import ContactUs from "./components/ContactUs";
 import Footer from "./components/Footer";
@@ -29,10 +28,13 @@ const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 };
 
 const App: React.FC = () => {
+  const location = useLocation();
+  const isAuthPage = location.pathname === "/auth";
+
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Navigation bar - show for all users */}
-      <Nav />
+      {/* Navigation bar - hide on auth page */}
+      {!isAuthPage && <Nav />}
 
       {/* Main content area */}
       <main className="flex-grow">
@@ -57,14 +59,6 @@ const App: React.FC = () => {
             element={
               <ProtectedRoute>
                 <Services />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/track-order"
-            element={
-              <ProtectedRoute>
-                <Tracking />
               </ProtectedRoute>
             }
           />
@@ -106,8 +100,8 @@ const App: React.FC = () => {
         </Routes>
       </main>
 
-      {/* Footer section - show for all users */}
-      <Footer />
+      {/* Footer section - hide on auth page */}
+      {!isAuthPage && <Footer />}
     </div>
   );
 };
