@@ -3,13 +3,14 @@ import { ShoppingBag, Phone, MapPin, Menu, X, Clock, Award, Search } from 'lucid
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import ProfileModal from './ProfileModal';
-import Support from './Support'; // Support form
-import SendPackage from './SendPackage'; // SendPackage form
+import Support from './Support';
+import SendPackage from './SendPackage';
 import './Nav.css';
 import { useAuth } from '../context/authContext';
 
 const Nav: React.FC = () => {
-  useAuth();
+  const { user, token, logout } = useAuth();
+  const isAuthenticated = !!user && !!token;
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileImage] = useState<string | null>(null);
@@ -17,13 +18,18 @@ const Nav: React.FC = () => {
 
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  // ✅ Modal states
+  // Modal states
   const [showSupportForm, setShowSupportForm] = useState(false);
   const [showSendPackageForm, setShowSendPackageForm] = useState(false);
 
   const handleSearchSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     navigate(`/products?search=${encodeURIComponent(searchQuery)}`);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
 
   return (
@@ -83,42 +89,65 @@ const Nav: React.FC = () => {
             </form>
           </div>
 
-          {/* Navigation Links */}
-          <ul className="nav-menu">
-            <li className="nav-item">
-              <NavLink to="/home" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Home</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/services" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Services</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/track-order" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Track Order</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/about-us" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>About Us</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/contact-us" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Contact Us</NavLink>
-            </li>
-          </ul>
+          {/* Navigation Links - Only show for authenticated users */}
+          {isAuthenticated && (
+            <ul className="nav-menu">
+              <li className="nav-item">
+                <NavLink to="/home" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Home</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to="/services" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Services</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to="/track-order" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Track Order</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to="/about-us" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>About Us</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to="/contact-us" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Contact Us</NavLink>
+              </li>
+            </ul>
+          )}
 
           {/* Actions & Profile */}
           <div className="nav-actions">
-            {/* Support Modal */}
-            <button className="btn-secondary" onClick={() => setShowSupportForm(true)}>
-              <Phone size={18} />
-              <span>Support Us</span>
-            </button>
+            {/* Sign In / Sign Up for non-authenticated users */}
+            {!isAuthenticated ? (
+              <>
+                <NavLink to="/auth" className="btn-secondary">
+                  Sign In
+                </NavLink>
+                <NavLink to="/auth" className="btn-primary">
+                  Sign Up
+                </NavLink>
+              </>
+            ) : (
+              // Show these only for authenticated users
+              <>
+                {/* Support Modal */}
+                <button className="btn-secondary" onClick={() => setShowSupportForm(true)}>
+                  <Phone size={18} />
+                  <span>Support Us</span>
+                </button>
 
-            {/* Send Package Modal */}
-            <button className="btn-primary" onClick={() => setShowSendPackageForm(true)}>
-              <MapPin size={18} />
-              <span>Send Package</span>
-            </button>
+                {/* Send Package Modal */}
+                <button className="btn-primary" onClick={() => setShowSendPackageForm(true)}>
+                  <MapPin size={18} />
+                  <span>Send Package</span>
+                </button>
 
-            <div className="profile-section">
-              {/* ... existing profile code ... */}
-            </div>
+                {/* Profile / Logout */}
+                <div className="profile-section">
+                  <button className="profile-button" onClick={() => setShowProfileModal(true)}>
+                    <span className="profile-name">{user?.name || 'User'}</span>
+                  </button>
+                  <button className="logout-button" onClick={handleLogout}>
+                    Logout
+                  </button>
+                </div>
+              </>
+            )}
 
             <button
               className="mobile-menu-btn"
@@ -147,11 +176,24 @@ const Nav: React.FC = () => {
             </div>
 
             <ul className="mobile-menu-list">
-              <li><NavLink to="/home" onClick={() => setMobileMenuOpen(false)} className="mobile-menu-link">Home</NavLink></li>
-              <li><NavLink to="/services" onClick={() => setMobileMenuOpen(false)} className="mobile-menu-link">Services</NavLink></li>
-              <li><NavLink to="/track-order" onClick={() => setMobileMenuOpen(false)} className="mobile-menu-link">Track Order</NavLink></li>
-              <li><NavLink to="/about-us" onClick={() => setMobileMenuOpen(false)} className="mobile-menu-link">About Us</NavLink></li>
-              <li><NavLink to="/contact-us" onClick={() => setMobileMenuOpen(false)} className="mobile-menu-link">Contact Us</NavLink></li>
+              {/* For non-authenticated users - show only Home and Auth */}
+              {!isAuthenticated ? (
+                <>
+                  <li><NavLink to="/" onClick={() => setMobileMenuOpen(false)} className="mobile-menu-link">Home</NavLink></li>
+                  <li><NavLink to="/auth" onClick={() => setMobileMenuOpen(false)} className="mobile-menu-link">Sign In</NavLink></li>
+                  <li><NavLink to="/auth" onClick={() => setMobileMenuOpen(false)} className="mobile-menu-link">Sign Up</NavLink></li>
+                </>
+              ) : (
+                // For authenticated users - show all links
+                <>
+                  <li><NavLink to="/home" onClick={() => setMobileMenuOpen(false)} className="mobile-menu-link">Home</NavLink></li>
+                  <li><NavLink to="/services" onClick={() => setMobileMenuOpen(false)} className="mobile-menu-link">Services</NavLink></li>
+                  <li><NavLink to="/track-order" onClick={() => setMobileMenuOpen(false)} className="mobile-menu-link">Track Order</NavLink></li>
+                  <li><NavLink to="/about-us" onClick={() => setMobileMenuOpen(false)} className="mobile-menu-link">About Us</NavLink></li>
+                  <li><NavLink to="/contact-us" onClick={() => setMobileMenuOpen(false)} className="mobile-menu-link">Contact Us</NavLink></li>
+                  <li><button onClick={handleLogout} className="mobile-menu-link">Logout</button></li>
+                </>
+              )}
             </ul>
           </div>
         )}

@@ -2,7 +2,7 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
-// ✅ Import Components
+// Import Components
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import Services from "./components/Services";
@@ -16,7 +16,7 @@ import Auth from "./components/Auth";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./context/authContext";
 
-// ✅ PublicRoute - Redirects logged-in users away from auth page
+// PublicRoute - Redirects logged-in users away from auth page
 const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, token } = useAuth();
   const isAuthenticated = !!user && !!token;
@@ -29,18 +29,15 @@ const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 };
 
 const App: React.FC = () => {
-  const { user, token } = useAuth();
-  const isAuthenticated = !!user && !!token;
-
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Navigation bar - only show for authenticated users */}
-      {isAuthenticated && <Nav />}
+      {/* Navigation bar - show for all users */}
+      <Nav />
 
-      {/* ✅ Main content area */}
+      {/* Main content area */}
       <main className="flex-grow">
         <Routes>
-          {/* ✅ Auth route - accessible only to non-logged-in users */}
+          {/* Auth route - accessible to everyone, but redirects if already logged in */}
           <Route
             path="/auth"
             element={
@@ -50,25 +47,11 @@ const App: React.FC = () => {
             }
           />
 
-          {/* ✅ Protected routes - require authentication */}
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <Hero />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/home"
-            element={
-              <ProtectedRoute>
-                <Hero />
-              </ProtectedRoute>
-            }
-          />
+          {/* Home page - PUBLIC - accessible to everyone */}
+          <Route path="/" element={<Hero />} />
+          <Route path="/home" element={<Hero />} />
 
-          {/* Core pages */}
+          {/* ALL OTHER PAGES - PROTECTED - require login to access */}
           <Route
             path="/services"
             element={
@@ -109,8 +92,6 @@ const App: React.FC = () => {
               </ProtectedRoute>
             }
           />
-
-          {/* ✅ New page for drivers */}
           <Route
             path="/become-driver"
             element={
@@ -120,13 +101,13 @@ const App: React.FC = () => {
             }
           />
 
-          {/* Fallback redirect - send to auth if not logged in */}
-          <Route path="*" element={<Navigate to="/auth" replace />} />
+          {/* Fallback redirect */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
 
-      {/* Footer section - only show for authenticated users */}
-      {isAuthenticated && <Footer />}
+      {/* Footer section - show for all users */}
+      <Footer />
     </div>
   );
 };

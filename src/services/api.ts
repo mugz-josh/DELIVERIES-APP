@@ -1,15 +1,13 @@
 import { LoginCredentials, AuthResponse, User } from '../context/types';
 
-// ✅ FIXED: Add fallback in case environment variable is missing
-// Use REACT_APP_API_URL env variable, fallback to Render backend
-const API_BASE_URL = process.env.REACT_APP_API_URL || "https://deliverieseasy.onrender.com";
+// Use local backend during development - connects to localhost:5000
+const API_BASE_URL = "http://localhost:5000";
 
 // -------------------------
 // Auth API
 // -------------------------
 export const authAPI = {
   login: async (credentials: LoginCredentials): Promise<AuthResponse> => {
-    // Fixed: Use /api/auth/login instead of /otp/login
     const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -21,12 +19,10 @@ export const authAPI = {
   },
 
   logout: async (): Promise<void> => {
-    // Fixed: Use /api/auth/logout instead of /otp/logout
     await fetch(`${API_BASE_URL}/api/auth/logout`, { method: 'POST' });
   },
 
   getProfile: async (token: string): Promise<User> => {
-    // Fixed: Use /api/auth/profile instead of /otp/profile
     const response = await fetch(`${API_BASE_URL}/api/auth/profile`, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -40,14 +36,12 @@ export const authAPI = {
 // Deliveries API
 // -------------------------
 export const fetchDeliveries = async (): Promise<any[]> => {
-  // Fixed: Use /api/deliveries instead of /deliveries
   const response = await fetch(`${API_BASE_URL}/api/deliveries`);
   if (!response.ok) throw new Error('Failed to fetch deliveries');
   return response.json();
 };
 
 export const updateDeliveryStatus = async (id: string | number, status: string): Promise<void> => {
-  // Fixed: Use /api/deliveries instead of /deliveries
   const response = await fetch(`${API_BASE_URL}/api/deliveries/${id}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
@@ -57,7 +51,6 @@ export const updateDeliveryStatus = async (id: string | number, status: string):
 };
 
 export const deleteDelivery = async (id: string | number): Promise<void> => {
-  // Fixed: Use /api/deliveries instead of /deliveries
   const response = await fetch(`${API_BASE_URL}/api/deliveries/${id}`, {
     method: 'DELETE',
   });
@@ -68,7 +61,6 @@ export const deleteDelivery = async (id: string | number): Promise<void> => {
 // Assign Driver API
 // -------------------------
 export const assignDriver = async (deliveryId: string | number, driverId: string | number): Promise<void> => {
-  // Fixed: Use /api/deliveries instead of /deliveries
   const response = await fetch(`${API_BASE_URL}/api/deliveries/${deliveryId}/assign`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },

@@ -1,9 +1,14 @@
 // src/components/Hero.tsx
 import React from "react";
-import { Package, Truck, Clock, MapPin, Zap } from "lucide-react";
+import { Package, Truck, Clock, MapPin, Zap, User, UserPlus } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 import "./Hero.css";
 
 const Hero: React.FC = () => {
+  const { user, token } = useAuth();
+  const isAuthenticated = !!user && !!token;
+
   return (
     <section className="hero-section">
       <div className="hero-content">
@@ -19,8 +24,14 @@ const Hero: React.FC = () => {
             with our secure boda boda network.
           </p>
 
-          {/* HERO BUTTONS */}
-          <div className="hero-buttons">
+          {/* HERO BUTTONS - Sign In and Sign Up for ALL users (prominently displayed) */}
+          <div className="hero-buttons" style={{ display: 'flex', gap: '1rem', marginTop: '1rem', flexWrap: 'wrap' }}>
+            <Link to="/auth" className="hero-btn-secondary" style={{ padding: '14px 28px', fontSize: '1rem', fontWeight: 700, borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '8px', background: '#f39c12', color: '#fff', border: '2px solid #f39c12' }}>
+              <User size={20} /> <span>Sign In</span>
+            </Link>
+            <Link to="/auth" className="hero-btn-primary" style={{ padding: '14px 28px', fontSize: '1rem', fontWeight: 700, borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '8px', background: '#e67e22', color: '#fff', border: '2px solid #e67e22' }}>
+              <UserPlus size={20} /> <span>Sign Up</span>
+            </Link>
             <a
               href="https://wa.me/256754316375?text=Hello!%20I%20want%20to%20place%20an%20order"
               target="_blank"
