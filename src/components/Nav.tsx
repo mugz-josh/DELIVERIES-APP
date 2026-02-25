@@ -1,5 +1,5 @@
 // src/components/Nav.tsx
-import { ShoppingBag, Phone, MapPin, Menu, X, Clock, Award, Search } from 'lucide-react';
+import { Phone, MapPin, Menu, X, Clock, Award, Search } from 'lucide-react';
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import ProfileModal from './ProfileModal';
@@ -61,11 +61,13 @@ const Nav: React.FC = () => {
         <div className="nav-content">
           {/* Logo */}
           <div className="nav-logo">
-            <div className="logo-badge">
-              <ShoppingBag className="logo-icon" />
-            </div>
+            <img 
+              src="https://logo.com/image-cdn/images/kts928pd/production/4fa80ce406bb89b67ed5090cf477e2eeb89e0394-377x386.png?w=1080&q=72&fm=webp" 
+              alt="Deliveries Easy" 
+              className="logo-image"
+            />
             <div className="logo-text-wrapper">
-              <span className="logo-text">QuickDeliver</span>
+              <span className="logo-text">Deliveries Easy</span>
               <span className="logo-tagline">Express Delivery Service</span>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { ShoppingBag, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Send, Clock, Truck, Shield, Star, Package, Users, Award } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Send, Clock, Truck, Shield, Star, Package, Users, Award } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import './Footer.css';
 
@@ -68,11 +68,13 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="footer-section footer-brand">
             <div className="footer-logo">
-              <div className="logo-badge">
-                <ShoppingBag className="footer-logo-icon" />
-              </div>
+              <img 
+                src="https://logo.com/image-cdn/images/kts928pd/production/4fa80ce406bb89b67ed5090cf477e2eeb89e0394-377x386.png?w=1080&q=72&fm=webp" 
+                alt="Deliveries Easy" 
+                className="footer-logo-image"
+              />
               <div className="logo-text-wrapper">
-                <span className="footer-logo-text">QuickDeliver</span>
+                <span className="footer-logo-text">Deliveries Easy</span>
                 <span className="footer-logo-tagline">Swift & Secure</span>
               </div>
             </div>

@@ -308,6 +308,22 @@
   margin-bottom: 1rem;
 }
 
+.footer-logo-image {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s ease;
+  background: #fff;
+  padding: 4px;
+}
+
+.footer-logo:hover .footer-logo-image {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(243, 156, 18, 0.4);
+}
+
 .logo-badge {
   width: 60px;
   height: 60px;
