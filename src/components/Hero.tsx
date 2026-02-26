@@ -1,13 +1,19 @@
 // src/components/Hero.tsx
 import React from "react";
-import { Package, Truck, Clock, MapPin, Zap, User, UserPlus } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Package, Truck, Clock, MapPin, Zap, User, UserPlus, LogOut } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import "./Hero.css";
 
 const Hero: React.FC = () => {
-  const { user, token } = useAuth();
+  const { user, token, logout } = useAuth();
   const isAuthenticated = !!user && !!token;
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   return (
     <section className="hero-section">
@@ -15,34 +21,45 @@ const Hero: React.FC = () => {
 
         {/* HERO TEXT */}
         <div className="hero-text">
+          {/* UPDATED: Hero Title with two lines and big styling */}
           <h1 className="hero-title">
-            Fast & Reliable <span className="hero-highlight">Boda Boda Delivery</span>
+            <span className="fast-reliable">Fast & Reliable</span>
+            <span className="boda-delivery">Boda Boda Delivery</span>
           </h1>
+          
           <p className="hero-description">
             Experience lightning-fast motorcycle delivery through city traffic. 
             Track in real-time, schedule instant pickups, and enjoy peace of mind 
             with our secure boda boda network.
           </p>
 
-          {/* HERO BUTTONS - Sign In and Sign Up for ALL users (prominently displayed) */}
-          <div className="hero-buttons" style={{ display: 'flex', gap: '1rem', marginTop: '1rem', flexWrap: 'wrap' }}>
-            <Link to="/auth" className="hero-btn-secondary" style={{ padding: '14px 28px', fontSize: '1rem', fontWeight: 700, borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '8px', background: '#f39c12', color: '#fff', border: '2px solid #f39c12' }}>
-              <User size={20} /> <span>Sign In</span>
-            </Link>
-            <Link to="/auth" className="hero-btn-primary" style={{ padding: '14px 28px', fontSize: '1rem', fontWeight: 700, borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '8px', background: '#e67e22', color: '#fff', border: '2px solid #e67e22' }}>
-              <UserPlus size={20} /> <span>Sign Up</span>
-            </Link>
-            <a
-              href="https://wa.me/256754316375?text=Hello!%20I%20want%20to%20place%20an%20order"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hero-btn-primary"
-            >
-              <Zap size={20} /> <span>Chat on WhatsApp</span>
-            </a>
-            <a href="/track-order" className="hero-btn-secondary">
+          {/* HERO BUTTONS - CONDITIONAL RENDERING */}
+          <div className="hero-buttons">
+            {/* Show different buttons based on authentication status */}
+            {!isAuthenticated ? (
+              /* NOT AUTHENTICATED - Show Sign In and Sign Up */
+              <>
+                <Link to="/auth" className="hero-btn-secondary">
+                  <User size={20} /> <span>Sign In</span>
+                </Link>
+                <Link to="/auth" className="hero-btn-primary">
+                  <UserPlus size={20} /> <span>Sign Up</span>
+                </Link>
+              </>
+            ) : (
+              /* AUTHENTICATED - Show Welcome Message and Logout */
+              <div className="hero-welcome">
+                <span className="welcome-text">Welcome back, {user?.name || 'User'}!</span>
+                <button onClick={handleLogout} className="hero-btn-logout">
+                  <LogOut size={20} /> <span>Logout</span>
+                </button>
+              </div>
+            )}
+            
+            {/* These buttons show for ALL users regardless of auth status */}
+            <Link to="/track-order" className="hero-btn-secondary">
               <MapPin size={20} /> <span>Track Delivery</span>
-            </a>
+            </Link>
           </div>
 
           {/* HERO STATS */}

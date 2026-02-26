@@ -1,5 +1,5 @@
 /* ==============================
-    SERVICES.CSS - ENHANCED CARD STYLING
+    SERVICES.CSS - ENHANCED CARD STYLING WITH IMAGE FIX
     ============================== */
 
 /* GLOBAL SETTINGS */
@@ -34,6 +34,90 @@ section::before {
 @keyframes backgroundPulse {
     0%,100% { opacity: 0.5; }
     50% { opacity: 0.8; }
+}
+
+/* ==============================
+    WHY EXPRESS DELIVERY SECTION - FIXED WITH SMALL IMAGE
+    ============================== */
+.why-safeboda-section {
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.why-safeboda-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+    position: relative;
+    z-index: 1;
+    flex-wrap: wrap;
+}
+
+.why-safeboda-text {
+    flex: 1;
+    min-width: 300px;
+}
+
+.why-safeboda-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #f39c12;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    text-align: left;
+}
+
+.why-safeboda-description {
+    font-size: 1.1rem;
+    color: #e0e0e0;
+    line-height: 1.6;
+    max-width: 500px;
+}
+
+.why-safeboda-visual {
+    flex: 0 0 auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* FIXED: Image size control - NOW SMALL AND PERFECT */
+.why-safeboda-image {
+    width: 280px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border: 3px solid rgba(243, 156, 18, 0.3);
+    transition: all 0.3s ease;
+    display: block;
+}
+
+.why-safeboda-image:hover {
+    transform: scale(1.02);
+    border-color: #f39c12;
+    box-shadow: 0 25px 50px rgba(243, 156, 18, 0.3);
+}
+
+.why-safeboda-badge {
+    margin-top: 15px;
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    box-shadow: 0 5px 15px rgba(243, 156, 18, 0.4);
+    border: 2px solid white;
+    font-size: 0.9rem;
 }
 
 /* ==============================
@@ -847,9 +931,34 @@ section::before {
 /* ==============================
     RESPONSIVE
     ============================== */
+@media (max-width: 992px) {
+    .why-safeboda-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+    
+    .why-safeboda-text {
+        text-align: center;
+    }
+    
+    .why-safeboda-description {
+        margin: 0 auto;
+    }
+    
+    .why-safeboda-title {
+        text-align: center;
+    }
+}
+
 @media (max-width: 768px) {
     section {
         padding: 3rem 1rem;
+    }
+    
+    .why-safeboda-image {
+        width: 240px;
+        height: 160px;
     }
     
     .services-grid {
@@ -871,5 +980,16 @@ section::before {
     
     .driver-benefits-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .why-safeboda-image {
+        width: 200px;
+        height: 140px;
+    }
+    
+    .why-safeboda-title {
+        font-size: 2rem;
     }
 }

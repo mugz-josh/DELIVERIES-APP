@@ -24,8 +24,8 @@ const BecomeDriver: React.FC = () => {
   return (
     <section className="become-driver-section">
       <div className="become-driver-container">
-        <h1>Join the SafeBoda Team</h1>
-        <p>Become a SafeBoda driver and start earning while making a difference in your community.</p>
+        <h1>Join the Express Delivery Team</h1>
+        <p>Become an Express Delivery driver and start earning while making a difference in your community.</p>
 
         {!submitted ? (
           <form className="become-driver-form" onSubmit={handleSubmit}>
